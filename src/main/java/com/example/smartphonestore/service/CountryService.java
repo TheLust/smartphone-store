@@ -4,19 +4,24 @@ import com.example.smartphonestore.dao.CountryDAO;
 import com.example.smartphonestore.entity.CountryEntity;
 import com.example.smartphonestore.entity.dto.CountryDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class CountryService {
 
     private final CountryDAO countryDAO;
 
-    public List<Object> getAll() {
-        return List.of(countryDAO.findAll());
+    public List<CountryEntity> getAll() {
+        return countryDAO.findAll();
+    }
+
+    public CountryEntity getCountryByName(String name) {
+        return countryDAO.findByName(name);
     }
 
     public void add(CountryDTO countryDTO) {

@@ -2,6 +2,7 @@ package com.example.smartphonestore.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -15,5 +16,6 @@ public class CountryEntity {
     private String name;
 
     @Column(nullable = false, unique = true)
+    @Length(min = 2, max = 2, message = "Country code must have 2 characters.")
     private String code;
 }

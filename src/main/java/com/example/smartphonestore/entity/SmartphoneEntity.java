@@ -108,4 +108,15 @@ public class SmartphoneEntity {
     @Column(nullable = false)
     private boolean bluetooth;
 
+    public boolean isForGaming() {
+        return processor.getTechnology() <= 5 && refreshRate >= 90 && displayWidth >= 1080 && rom >= 128 && batteryCapacity >= 4500 && fastCharging >= 30 && ram >= 6 && audioConnector;
+    }
+
+    public double calculateScreenToBodyRatio() {
+        double displayArea = displayHeight * displayWidth;
+        double frontArea = length * width;
+
+        return (displayArea / frontArea) * 100.0;
+    }
+
 }

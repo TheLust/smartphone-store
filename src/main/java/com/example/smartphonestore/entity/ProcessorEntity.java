@@ -27,5 +27,5 @@ public class ProcessorEntity {
     private ManufacturerEntity manufacturer;
 
     @Column(nullable = false)
-    private float maxFrequency;
+    private double maxFrequency;
 }

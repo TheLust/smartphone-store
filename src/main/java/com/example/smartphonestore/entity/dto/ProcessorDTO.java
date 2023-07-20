@@ -26,5 +26,5 @@ public class ProcessorDTO {
     private String manufacturer;
 
     @NotBlank(message = "Processor maximum frequency cannot be null or blank.")
-    private float maxFrequency;
+    private double maxFrequency;
 }

@@ -9,8 +9,10 @@ import com.example.smartphonestore.entity.dto.SmartphoneDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -23,6 +25,18 @@ public class SmartphoneService {
 
     public List<Object> getAll() {
         return List.of(smartphoneDAO.findAll());
+    }
+
+    public List<SmartphoneEntity> getGamingSmartphones() {
+        List<SmartphoneEntity> smartphones = new ArrayList<>();
+
+        for (SmartphoneEntity smartphone : smartphoneDAO.findAll()) {
+            if (smartphone.isForGaming()) {
+                smartphones.add(smartphone);
+            }
+        }
+
+        return smartphones;
     }
 
     public void add(SmartphoneDTO smartphoneDTO) {
