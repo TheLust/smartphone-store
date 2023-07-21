@@ -4,7 +4,6 @@ import com.example.smartphonestore.dao.CountryDAO;
 import com.example.smartphonestore.entity.CountryEntity;
 import com.example.smartphonestore.entity.dto.CountryDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

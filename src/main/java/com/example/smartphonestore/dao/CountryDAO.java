@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CountryDAO extends JpaRepository<CountryEntity, Long> {
     CountryEntity findByCode(String code);
+
     CountryEntity findByName(String name);
 }

@@ -16,5 +16,5 @@ public class ManufacturerDTO {
     private String name;
 
     @NotBlank(message = "Manufacturer country cannot be null or blank.")
-    private String country;
+    private CountryDTO country;
 }
