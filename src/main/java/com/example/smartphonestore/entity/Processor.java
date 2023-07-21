@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-public class ProcessorEntity {
+public class Processor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +24,7 @@ public class ProcessorEntity {
 
     @NotNull
     @ManyToOne
-    private ManufacturerEntity manufacturer;
+    private Manufacturer manufacturer;
 
     @Column(nullable = false)
     private double maxFrequency;

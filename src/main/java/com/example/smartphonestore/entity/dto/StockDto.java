@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StockDTO {
+public class StockDto {
 
     @NotBlank(message = "Smartphone cannot be null or blank.")
     private String smartphone;

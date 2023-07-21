@@ -1,6 +1,6 @@
 package com.example.smartphonestore.validator;
 
-import com.example.smartphonestore.entity.CountryEntity;
+import com.example.smartphonestore.entity.Country;
 import com.example.smartphonestore.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,18 +19,18 @@ public class CountryValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return CountryEntity.class.equals(clazz);
+        return Country.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        CountryEntity country = (CountryEntity) target;
+        Country country = (Country) target;
 
-        if (countryService.getCountryByName(country.getName()) != null) {
+        if (countryService.getByName(country.getName()) != null) {
             errors.rejectValue("name", "Country with this name already exists.");
         }
 
-        if (countryService.getCountryByName(country.getName()) != null) {
+        if (countryService.getByName(country.getName()) != null) {
             errors.rejectValue("code", "Country with this code already exists.");
         }
     }

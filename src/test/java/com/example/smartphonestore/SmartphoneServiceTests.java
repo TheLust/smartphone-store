@@ -1,6 +1,6 @@
 package com.example.smartphonestore;
 
-import com.example.smartphonestore.dao.SmartphoneDAO;
+import com.example.smartphonestore.dao.SmartphoneDao;
 import com.example.smartphonestore.entity.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +18,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SmartphoneServiceTests {
 
     @Autowired
-    private SmartphoneDAO smartphoneDAO;
+    private SmartphoneDao smartphoneDAO;
 
     @Autowired
     private TestEntityManager entityManager;
 
     @Test
     public void givenCountry_whenGetGamingSmartphones_thenReturnGamingSmartphones() {
-        CountryEntity country = getCountry();
-        ManufacturerEntity manufacturer = getManufacurer(country);
-        ProcessorEntity processor = getProcessor(manufacturer);
-        USBConnectorEntity usbConnector = getUSBConnector();
-        SmartphoneEntity smartphone = getSmartphone(manufacturer, processor, usbConnector);
+        Country country = getCountry();
+        Manufacturer manufacturer = getManufacurer(country);
+        Processor processor = getProcessor(manufacturer);
+        UsbConnector usbConnector = getUSBConnector();
+        Smartphone smartphone = getSmartphone(manufacturer, processor, usbConnector);
 
         entityManager.persist(country);
         entityManager.persist(manufacturer);
@@ -37,33 +37,33 @@ public class SmartphoneServiceTests {
         entityManager.persist(usbConnector);
         entityManager.persist(smartphone);
 
-        SmartphoneEntity smartphone1 = getSmartphone(manufacturer, processor, usbConnector);
+        Smartphone smartphone1 = getSmartphone(manufacturer, processor, usbConnector);
         smartphone1.setName("sm2");
         smartphone1.setAudioConnector(false);
 
         entityManager.persist(smartphone1);
 
-        SmartphoneEntity smartphone2 = getSmartphone(manufacturer, processor, usbConnector);
+        Smartphone smartphone2 = getSmartphone(manufacturer, processor, usbConnector);
         smartphone2.setName("sm3");
 
         entityManager.persist(smartphone2);
 
         // Call the method that returns gaming smartphones
 
-        List<SmartphoneEntity> gamingSmartphones = getGamingSmartphones();
+        List<Smartphone> gamingSmartphones = getGamingSmartphones();
 
         // Verify the results
         assertEquals(2, gamingSmartphones.size()); // Two smartphones should be suitable for gaming
     }
 
-    private USBConnectorEntity getUSBConnector() {
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+    private UsbConnector getUSBConnector() {
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Z");
         return  usbConnector;
     }
 
-    private ProcessorEntity getProcessor(ManufacturerEntity manufacturer) {
-        ProcessorEntity processor = new ProcessorEntity();
+    private Processor getProcessor(Manufacturer manufacturer) {
+        Processor processor = new Processor();
         processor.setGpuModel("IDK GPU");
         processor.setTechnology(4);
         processor.setManufacturer(manufacturer);
@@ -72,22 +72,22 @@ public class SmartphoneServiceTests {
         return processor;
     }
 
-    private ManufacturerEntity getManufacurer(CountryEntity country) {
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+    private Manufacturer getManufacurer(Country country) {
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Gigel's Company");
         manufacturer.setCountry(country);
         return  manufacturer;
     }
 
-    private CountryEntity getCountry() {
-        CountryEntity country = new CountryEntity();
+    private Country getCountry() {
+        Country country = new Country();
         country.setName("Moldova");
         country.setCode("MD");
         return  country;
     }
 
-    private SmartphoneEntity getSmartphone(ManufacturerEntity manufacturer, ProcessorEntity processor, USBConnectorEntity usbConnector) {
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+    private Smartphone getSmartphone(Manufacturer manufacturer, Processor processor, UsbConnector usbConnector) {
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -120,10 +120,10 @@ public class SmartphoneServiceTests {
         return smartphone;
     }
 
-    public List<SmartphoneEntity> getGamingSmartphones() {
-        List<SmartphoneEntity> smartphones = new ArrayList<>();
+    public List<Smartphone> getGamingSmartphones() {
+        List<Smartphone> smartphones = new ArrayList<>();
 
-        for (SmartphoneEntity smartphone : smartphoneDAO.findAll()) {
+        for (Smartphone smartphone : smartphoneDAO.findAll()) {
             if (smartphone.isForGaming()) {
                 smartphones.add(smartphone);
             }

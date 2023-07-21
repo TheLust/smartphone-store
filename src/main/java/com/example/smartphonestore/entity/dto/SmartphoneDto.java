@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SmartphoneDTO {
+public class SmartphoneDto {
     //General information
 
     @NotBlank(message = "Smartphone name cannot be null or blank.")

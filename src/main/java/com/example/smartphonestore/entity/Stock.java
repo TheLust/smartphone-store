@@ -9,7 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class StockEntity {
+public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,7 +17,7 @@ public class StockEntity {
 
     @NotNull
     @ManyToOne
-    private SmartphoneEntity smartphone;
+    private Smartphone smartphone;
 
     @Column(nullable = false)
     private String color;

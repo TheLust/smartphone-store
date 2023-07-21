@@ -1,43 +1,42 @@
 package com.example.smartphonestore.service;
 
-import com.example.smartphonestore.dao.CountryDAO;
-import com.example.smartphonestore.dao.ManufacturerDAO;
-import com.example.smartphonestore.entity.ManufacturerEntity;
-import com.example.smartphonestore.entity.dto.ManufacturerDTO;
-import lombok.RequiredArgsConstructor;
+import com.example.smartphonestore.dao.ManufacturerDao;
+import com.example.smartphonestore.entity.Manufacturer;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
+@AllArgsConstructor
 public class ManufacturerService {
 
-    private final ManufacturerDAO manufacturerDAO;
-    private final CountryDAO countryDAO;
+    private final ManufacturerDao manufacturerDao;
 
-    public List<Object> getAll() {
-        return List.of(manufacturerDAO.findAll());
+    public List<Manufacturer> getAll() {
+        return manufacturerDao.findAll();
     }
 
-    public void add(ManufacturerDTO manufacturerDTO) {
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
-        manufacturer.setName(manufacturerDTO.getName());
-        manufacturer.setCountry(countryDAO.findByName(manufacturerDTO.getCountry().getName()));
-        manufacturerDAO.save(manufacturer);
+    public Manufacturer getByName(String name) {
+        return manufacturerDao.findByName(name);
     }
 
-    public void update(long id, ManufacturerDTO manufacturerDTO) {
-        Optional<ManufacturerEntity> manufacturer = manufacturerDAO.findById(id);
-        if (manufacturer.isPresent()) {
-            manufacturer.get().setName(manufacturerDTO.getName());
-            manufacturer.get().setCountry(countryDAO.findByName(manufacturerDTO.getCountry().getName()));
-            manufacturerDAO.save(manufacturer.get());
-        }
+    public Optional<Manufacturer> getById(Long id) {
+        return manufacturerDao.findById(id);
     }
 
-    public void delete(long id) {
-        manufacturerDAO.deleteById(id);
+    public void add(Manufacturer manufacturer) {
+        manufacturerDao.save(manufacturer);
+    }
+
+    public void update(Manufacturer manufacturerToUpdate, Manufacturer updatedManufacturer) {
+        manufacturerToUpdate.setName(updatedManufacturer.getName());
+        manufacturerToUpdate.setCountry(updatedManufacturer.getCountry());
+        manufacturerDao.save(manufacturerToUpdate);
+    }
+
+    public void delete(Long id) {
+        manufacturerDao.deleteById(id);
     }
 }

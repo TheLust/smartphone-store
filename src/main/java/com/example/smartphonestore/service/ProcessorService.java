@@ -1,9 +1,9 @@
 package com.example.smartphonestore.service;
 
-import com.example.smartphonestore.dao.ManufacturerDAO;
-import com.example.smartphonestore.dao.ProcessorDAO;
-import com.example.smartphonestore.entity.ProcessorEntity;
-import com.example.smartphonestore.entity.dto.ProcessorDTO;
+import com.example.smartphonestore.dao.ManufacturerDao;
+import com.example.smartphonestore.dao.ProcessorDao;
+import com.example.smartphonestore.entity.Processor;
+import com.example.smartphonestore.entity.dto.ProcessorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +14,15 @@ import java.util.Optional;
 @Service
 public class ProcessorService {
 
-    private final ProcessorDAO processorDAO;
-    private final ManufacturerDAO manufacturerDAO;
+    private final ProcessorDao processorDAO;
+    private final ManufacturerDao manufacturerDAO;
 
     public List<Object> getAll() {
         return List.of(processorDAO.findAll());
     }
 
-    public void add(ProcessorDTO processorDTO) {
-        ProcessorEntity processor = new ProcessorEntity();
+    public void add(ProcessorDto processorDTO) {
+        Processor processor = new Processor();
         processor.setTechnology(processorDTO.getTechnology());
         processor.setModel(processorDTO.getModel());
         processor.setGpuModel(processorDTO.getGpuModel());
@@ -31,8 +31,8 @@ public class ProcessorService {
         processorDAO.save(processor);
     }
 
-    public void update(long id, ProcessorDTO processorDTO) {
-        Optional<ProcessorEntity> processor = processorDAO.findById(id);
+    public void update(long id, ProcessorDto processorDTO) {
+        Optional<Processor> processor = processorDAO.findById(id);
         if (processor.isPresent()) {
             processor.get().setTechnology(processorDTO.getTechnology());
             processor.get().setModel(processorDTO.getModel());

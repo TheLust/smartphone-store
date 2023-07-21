@@ -1,7 +1,7 @@
 package com.example.smartphonestore.mappers;
 
-import com.example.smartphonestore.entity.CountryEntity;
-import com.example.smartphonestore.entity.dto.CountryDTO;
+import com.example.smartphonestore.entity.Country;
+import com.example.smartphonestore.entity.dto.CountryDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,11 @@ public class CountryMapper {
         this.modelMapper = modelMapper;
     }
 
-    public CountryEntity convertToCountry(CountryDTO countryDTO) {
-        return modelMapper.map(countryDTO, CountryEntity.class);
+    public Country convertToCountry(CountryDto countryDto) {
+        return modelMapper.map(countryDto, Country.class);
     }
 
-    public CountryDTO convertToCountryDto(CountryEntity country) {
-        return modelMapper.map(country, CountryDTO.class);
+    public CountryDto convertToCountryDto(Country country) {
+        return modelMapper.map(country, CountryDto.class);
     }
 }

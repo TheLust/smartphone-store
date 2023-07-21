@@ -18,51 +18,51 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class DAOIntegrationTests {
+public class DaoIntegrationTests {
 
     @Autowired
     private TestEntityManager testEntityManager;
 
     @Autowired
-    private CountryDAO countryDAO;
+    private CountryDao countryDao;
 
     @Autowired
-    private ManufacturerDAO manufacturerDAO;
+    private ManufacturerDao manufacturerDao;
 
     @Autowired
-    private ProcessorDAO processorDAO;
+    private ProcessorDao processorDao;
 
     @Autowired
-    private SmartphoneDAO smartphoneDAO;
+    private SmartphoneDao smartphoneDao;
 
     @Autowired
-    private StockDAO stockDAO;
+    private StockDao stockDao;
 
     @Autowired
-    private USBConnectorDAO usbConnectorDAO;
+    private UsbConnectorDao usbConnectorDao;
 
     //Country Tests
 
     @Test
-    public void whenAddCountry_thenStoreInDB() {
-        CountryEntity country = new CountryEntity();
+    public void whenAddCountry_thenStoreInDatabase() {
+        Country country = new Country();
         country.setName("Random");
         country.setCode("RM");
-        CountryEntity savedCountry = countryDAO.save(country);
+        Country savedCountry = countryDao.save(country);
 
         assertThat(savedCountry).hasFieldOrPropertyWithValue("name", "Random");
         assertThat(savedCountry).hasFieldOrPropertyWithValue("code", "RM");
     }
 
     @Test
-    public void whenUpdateCountry_thenModifyAndStoreInDB() {
-        CountryEntity country = new CountryEntity();
+    public void whenUpdateCountry_thenModifyAndStoreInDatabase() {
+        Country country = new Country();
         country.setName("Old Insert");
         country.setCode("OI");
-        CountryEntity storedCountry = countryDAO.save(country);
+        Country storedCountry = countryDao.save(country);
         storedCountry.setName("New Insert");
         storedCountry.setCode("NI");
-        country = countryDAO.save(storedCountry);
+        country = countryDao.save(storedCountry);
 
         assertThat(country).hasFieldOrPropertyWithValue("name", "New Insert");
         assertThat(country).hasFieldOrPropertyWithValue("code", "NI");
@@ -70,41 +70,41 @@ public class DAOIntegrationTests {
 
     @Test
     public void should_delete_tutorial_by_id() {
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("IDK");
         country.setCode("IK");
         testEntityManager.persist(country);
 
-        CountryEntity country2 = new CountryEntity();
+        Country country2 = new Country();
         country2.setName("IDK2");
         country2.setCode("I2");
         testEntityManager.persist(country2);
 
-        CountryEntity country3 = new CountryEntity();
+        Country country3 = new Country();
         country3.setName("IDK3");
         country3.setCode("I3");
         testEntityManager.persist(country3);
 
-        countryDAO.deleteById(country2.getId());
+        countryDao.deleteById(country2.getId());
 
-        Iterable<CountryEntity> tutorials = countryDAO.findAll();
+        Iterable<Country> tutorials = countryDao.findAll();
 
         assertThat(tutorials).hasSize(3).contains(country, country3);
     }
 
     @Test
     public void whenFindById_thenReturnCountry() {
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("Random");
         country.setCode("RM");
         testEntityManager.persist(country);
 
-        CountryEntity country2 = new CountryEntity();
+        Country country2 = new Country();
         country2.setName("Random2");
         country2.setCode("R2");
         testEntityManager.persist(country2);
 
-        CountryEntity foundCountry = countryDAO.findById(country2.getId()).get();
+        Country foundCountry = countryDao.findById(country2.getId()).get();
 
         assertThat(foundCountry).isEqualTo(country2);
     }
@@ -112,14 +112,14 @@ public class DAOIntegrationTests {
     @Test
     public void whenFindByName_thenReturnCountry() {
         // given
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("Some Country");
         country.setCode("SC");
         testEntityManager.persist(country);
         testEntityManager.flush();
 
         // when
-        CountryEntity found = countryDAO.findByName(country.getName());
+        Country found = countryDao.findByName(country.getName());
 
         // then
         assertThat(found.getName())
@@ -129,14 +129,14 @@ public class DAOIntegrationTests {
     @Test
     public void whenFindByCode_thenReturnCountry() {
         // given
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("Some Country");
         country.setCode("SC");
         testEntityManager.persist(country);
         testEntityManager.flush();
 
         // when
-        CountryEntity found = countryDAO.findByCode(country.getCode());
+        Country found = countryDao.findByCode(country.getCode());
 
         // then
         assertThat(found.getCode())
@@ -147,17 +147,17 @@ public class DAOIntegrationTests {
 
     @Test
     public void testSaveManufacturer_WithNonNullValues() {
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("Japan");
         country.setCode("JP");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Sony");
         manufacturer.setCountry(country);
         testEntityManager.persistAndFlush(manufacturer);
 
-        ManufacturerEntity savedManufacturer = manufacturerDAO.findByName("Sony");
+        Manufacturer savedManufacturer = manufacturerDao.findByName("Sony");
 
         assertNotNull(savedManufacturer);
         assertEquals("Sony", savedManufacturer.getName());
@@ -168,62 +168,62 @@ public class DAOIntegrationTests {
 
     @Test
     public void whenFindByName_thenReturnManufacturer() {
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("LG");
         testEntityManager.persistAndFlush(manufacturer);
 
-        ManufacturerEntity foundManufacturer = manufacturerDAO.findByName("LG");
+        Manufacturer foundManufacturer = manufacturerDao.findByName("LG");
 
         assertNotNull(foundManufacturer);
         assertEquals("LG", foundManufacturer.getName());
     }
 
     @Test
-    public void whenUpdateManufacturer_thenSaveItInDB() {
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+    public void whenUpdateManufacturer_thenSaveItInDatabase() {
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Apple");
         testEntityManager.persistAndFlush(manufacturer);
 
-        ManufacturerEntity foundManufacturer = manufacturerDAO.findByName("Apple");
+        Manufacturer foundManufacturer = manufacturerDao.findByName("Apple");
         assertNotNull(foundManufacturer);
 
         foundManufacturer.setName("Updated Apple");
-        manufacturerDAO.save(foundManufacturer);
+        manufacturerDao.save(foundManufacturer);
 
-        ManufacturerEntity updatedManufacturer = manufacturerDAO.findByName("Updated Apple");
+        Manufacturer updatedManufacturer = manufacturerDao.findByName("Updated Apple");
         assertNotNull(updatedManufacturer);
     }
 
     @Test
-    public void whenDeleteManufacturer_removeItFromDB() {
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+    public void whenDeleteManufacturer_removeItFromDatabase() {
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Google");
         testEntityManager.persistAndFlush(manufacturer);
 
-        ManufacturerEntity foundManufacturer = manufacturerDAO.findByName("Google");
+        Manufacturer foundManufacturer = manufacturerDao.findByName("Google");
         assertNotNull(foundManufacturer);
 
         long manufacturerId = foundManufacturer.getId();
-        manufacturerDAO.deleteById(manufacturerId);
+        manufacturerDao.deleteById(manufacturerId);
 
-        assertFalse(manufacturerDAO.findById(manufacturerId).isPresent());
+        assertFalse(manufacturerDao.findById(manufacturerId).isPresent());
     }
 
     //Processor Tests
 
     @Test
     public void testSaveProcessor_WithNonNullValues() {
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("Taiwan");
         country.setCode("TW");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("AMD");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Radeon");
         processor.setModel("Ryzen 9 5950X");
@@ -231,7 +231,7 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(4.9f);
         testEntityManager.persistAndFlush(processor);
 
-        ProcessorEntity savedProcessor = processorDAO.findByModel("Ryzen 9 5950X");
+        Processor savedProcessor = processorDao.findByModel("Ryzen 9 5950X");
 
         assertNotNull(savedProcessor);
         assertEquals(7, savedProcessor.getTechnology());
@@ -245,14 +245,14 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void whenAddProcessor_thenSaveInDB() {
-        ProcessorEntity processor = new ProcessorEntity();
+    public void whenAddProcessor_thenSaveInDatabase() {
+        Processor processor = new Processor();
         processor.setTechnology(5);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         testEntityManager.persistAndFlush(processor);
 
-        ProcessorEntity insertedProcessor = processorDAO.findByModel("Snapdragon 888");
+        Processor insertedProcessor = processorDao.findByModel("Snapdragon 888");
         assertNotNull(insertedProcessor);
         assertEquals(5, insertedProcessor.getTechnology());
         assertEquals("Adreno", insertedProcessor.getGpuModel());
@@ -262,49 +262,49 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void whenUpdateProcessor_thenSaveInDB() {
-        ProcessorEntity processor = new ProcessorEntity();
+    public void whenUpdateProcessor_thenSaveInDatabase() {
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Radeon");
         processor.setModel("Ryzen 5 5600X");
         testEntityManager.persistAndFlush(processor);
 
-        ProcessorEntity foundProcessor = processorDAO.findByModel("Ryzen 5 5600X");
+        Processor foundProcessor = processorDao.findByModel("Ryzen 5 5600X");
         assertNotNull(foundProcessor);
 
         foundProcessor.setGpuModel("Radeon 6000 Series");
-        processorDAO.save(foundProcessor);
+        processorDao.save(foundProcessor);
 
-        ProcessorEntity updatedProcessor = processorDAO.findByModel("Ryzen 5 5600X");
+        Processor updatedProcessor = processorDao.findByModel("Ryzen 5 5600X");
         assertNotNull(updatedProcessor);
         assertEquals("Radeon 6000 Series", updatedProcessor.getGpuModel());
     }
 
     @Test
-    public void whenDeleteProcessor_thenRemoveFromDB() {
-        ProcessorEntity processor = new ProcessorEntity();
+    public void whenDeleteProcessor_thenRemoveFromDatabase() {
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Radeon");
         processor.setModel("Ryzen 7 5800X");
         testEntityManager.persistAndFlush(processor);
 
-        ProcessorEntity foundProcessor = processorDAO.findByModel("Ryzen 7 5800X");
+        Processor foundProcessor = processorDao.findByModel("Ryzen 7 5800X");
         assertNotNull(foundProcessor);
 
         long processorId = foundProcessor.getId();
-        processorDAO.deleteById(processorId);
+        processorDao.deleteById(processorId);
 
-        assertFalse(processorDAO.findById(processorId).isPresent());
+        assertFalse(processorDao.findById(processorId).isPresent());
     }
 
     // USB Connector tests
 
     @Test
     public void testSaveUSBConnector_WithNonNullValues() {
-        USBConnectorEntity usbConnectorEntity = new USBConnectorEntity();
-        usbConnectorEntity.setName("USB-C");
+        UsbConnector usbConnector = new UsbConnector();
+        usbConnector.setName("USB-C");
 
-        USBConnectorEntity savedUSBConnector = usbConnectorDAO.save(usbConnectorEntity);
+        UsbConnector savedUSBConnector = usbConnectorDao.save(usbConnector);
 
         assertNotNull(savedUSBConnector);
         assertEquals("USB-C", savedUSBConnector.getName());
@@ -312,56 +312,56 @@ public class DAOIntegrationTests {
 
     @Test
     public void whenFindUSBConnectorByName_thenReturnUSBConnector() {
-        USBConnectorEntity usbConnectorEntity = new USBConnectorEntity();
-        usbConnectorEntity.setName("Micro USB");
+        UsbConnector usbConnector = new UsbConnector();
+        usbConnector.setName("Micro USB");
 
-        testEntityManager.persistAndFlush(usbConnectorEntity);
+        testEntityManager.persistAndFlush(usbConnector);
 
-        USBConnectorEntity foundUSBConnector = usbConnectorDAO.findByName("Micro USB");
+        UsbConnector foundUSBConnector = usbConnectorDao.findByName("Micro USB");
 
         assertNotNull(foundUSBConnector);
         assertEquals("Micro USB", foundUSBConnector.getName());
     }
 
     @Test
-    public void whenUpdateUSBConnector_thenSaveInDB() {
-        USBConnectorEntity usbConnectorEntity = new USBConnectorEntity();
-        usbConnectorEntity.setName("USB-A");
+    public void whenUpdateUSBConnector_thenSaveInDatabase() {
+        UsbConnector usbConnector = new UsbConnector();
+        usbConnector.setName("USB-A");
 
-        testEntityManager.persistAndFlush(usbConnectorEntity);
+        testEntityManager.persistAndFlush(usbConnector);
 
-        USBConnectorEntity foundUSBConnector = usbConnectorDAO.findByName("USB-A");
+        UsbConnector foundUSBConnector = usbConnectorDao.findByName("USB-A");
         assertNotNull(foundUSBConnector);
 
         foundUSBConnector.setName("USB-B");
-        usbConnectorDAO.save(foundUSBConnector);
+        usbConnectorDao.save(foundUSBConnector);
 
-        USBConnectorEntity updatedUSBConnector = usbConnectorDAO.findByName("USB-B");
+        UsbConnector updatedUSBConnector = usbConnectorDao.findByName("USB-B");
         assertNotNull(updatedUSBConnector);
     }
 
     @Test
-    public void whenDeleteUSBConnector_thenSaveInDB() {
-        USBConnectorEntity usbConnectorEntity = new USBConnectorEntity();
-        usbConnectorEntity.setName("Lightning");
+    public void whenDeleteUSBConnector_thenSaveInDatabase() {
+        UsbConnector usbConnector = new UsbConnector();
+        usbConnector.setName("Lightning");
 
-        testEntityManager.persistAndFlush(usbConnectorEntity);
+        testEntityManager.persistAndFlush(usbConnector);
 
-        USBConnectorEntity foundUSBConnector = usbConnectorDAO.findByName("Lightning");
+        UsbConnector foundUSBConnector = usbConnectorDao.findByName("Lightning");
         assertNotNull(foundUSBConnector);
 
         long usbConnectorId = foundUSBConnector.getId();
-        usbConnectorDAO.deleteById(usbConnectorId);
+        usbConnectorDao.deleteById(usbConnectorId);
 
-        assertFalse(usbConnectorDAO.findById(usbConnectorId).isPresent());
+        assertFalse(usbConnectorDao.findById(usbConnectorId).isPresent());
     }
 
     @Test
-    public void whenAddUSBConnector_thenSaveInDB() {
-        USBConnectorEntity usbConnectorEntity = new USBConnectorEntity();
-        usbConnectorEntity.setName("USB-A");
+    public void whenAddUSBConnector_thenSaveInDatabase() {
+        UsbConnector usbConnector = new UsbConnector();
+        usbConnector.setName("USB-A");
 
-        USBConnectorEntity insertedUSBConnector = usbConnectorDAO.save(usbConnectorEntity);
+        UsbConnector insertedUSBConnector = usbConnectorDao.save(usbConnector);
 
         assertNotNull(insertedUSBConnector);
         assertEquals("USB-A", insertedUSBConnector.getName());
@@ -371,17 +371,17 @@ public class DAOIntegrationTests {
 
     @Test
     public void testSaveSmartphone_WithNonNullValues() {
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("South Korea");
         country.setCode("KR");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Samsung");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
@@ -389,11 +389,11 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(2.84f);
         testEntityManager.persist(processor);
 
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Type-C");
         testEntityManager.persist(usbConnector);
 
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -423,7 +423,7 @@ public class DAOIntegrationTests {
         smartphone.setWifi(true);
         smartphone.setBluetooth(true);
 
-        SmartphoneEntity savedSmartphone = smartphoneDAO.save(smartphone);
+        Smartphone savedSmartphone = smartphoneDao.save(smartphone);
 
         assertNotNull(savedSmartphone);
         assertEquals("Galaxy S21", savedSmartphone.getName());
@@ -457,18 +457,18 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void whenAddSmartphone_thenSaveInDB() {
-        CountryEntity country = new CountryEntity();
+    public void whenAddSmartphone_thenSaveInDatabase() {
+        Country country = new Country();
         country.setName("South Korea");
         country.setCode("KR");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Samsung");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
@@ -476,11 +476,11 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(2.84f);
         testEntityManager.persist(processor);
 
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Type-C");
         testEntityManager.persist(usbConnector);
 
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -510,25 +510,25 @@ public class DAOIntegrationTests {
         smartphone.setWifi(true);
         smartphone.setBluetooth(true);
 
-        SmartphoneEntity insertedSmartphone = smartphoneDAO.save(smartphone);
+        Smartphone insertedSmartphone = smartphoneDao.save(smartphone);
 
         assertNotNull(insertedSmartphone);
         assertEquals("Galaxy S21", insertedSmartphone.getName());
     }
 
     @Test
-    public void whenUpdateSmartphone_thenSaveInDB() {
-        CountryEntity country = new CountryEntity();
+    public void whenUpdateSmartphone_thenSaveInDatabase() {
+        Country country = new Country();
         country.setName("South Korea");
         country.setCode("KR");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Samsung");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
@@ -536,11 +536,11 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(2.84f);
         testEntityManager.persist(processor);
 
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Type-C");
         testEntityManager.persist(usbConnector);
 
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -570,10 +570,10 @@ public class DAOIntegrationTests {
         smartphone.setWifi(true);
         smartphone.setBluetooth(true);
 
-        SmartphoneEntity savedSmartphone = smartphoneDAO.save(smartphone);
+        Smartphone savedSmartphone = smartphoneDao.save(smartphone);
         long smartphoneId = savedSmartphone.getId();
 
-        SmartphoneEntity foundSmartphone = smartphoneDAO.findById(smartphoneId).orElse(null);
+        Smartphone foundSmartphone = smartphoneDao.findById(smartphoneId).orElse(null);
         assertNotNull(foundSmartphone);
 
         // Update some attributes
@@ -581,9 +581,9 @@ public class DAOIntegrationTests {
         foundSmartphone.setWidth(74.4f);
         foundSmartphone.setThickness(8.9f);
         foundSmartphone.setRam(12);
-        smartphoneDAO.save(foundSmartphone);
+        smartphoneDao.save(foundSmartphone);
 
-        SmartphoneEntity updatedSmartphone = smartphoneDAO.findById(smartphoneId).orElse(null);
+        Smartphone updatedSmartphone = smartphoneDao.findById(smartphoneId).orElse(null);
         assertNotNull(updatedSmartphone);
         assertEquals(153.9f, updatedSmartphone.getLength());
         assertEquals(74.4f, updatedSmartphone.getWidth());
@@ -592,18 +592,18 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void whenDeleteSmartphone_thenRemoveFromDB() {
-        CountryEntity country = new CountryEntity();
+    public void whenDeleteSmartphone_thenRemoveFromDatabase() {
+        Country country = new Country();
         country.setName("South Korea");
         country.setCode("KR");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Samsung");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
@@ -611,11 +611,11 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(2.84f);
         testEntityManager.persist(processor);
 
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Type-C");
         testEntityManager.persist(usbConnector);
 
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -645,29 +645,29 @@ public class DAOIntegrationTests {
         smartphone.setWifi(true);
         smartphone.setBluetooth(true);
 
-        SmartphoneEntity savedSmartphone = smartphoneDAO.save(smartphone);
+        Smartphone savedSmartphone = smartphoneDao.save(smartphone);
         long smartphoneId = savedSmartphone.getId();
 
-        assertTrue(smartphoneDAO.existsById(smartphoneId));
+        assertTrue(smartphoneDao.existsById(smartphoneId));
 
-        smartphoneDAO.deleteById(smartphoneId);
+        smartphoneDao.deleteById(smartphoneId);
 
-        assertFalse(smartphoneDAO.existsById(smartphoneId));
+        assertFalse(smartphoneDao.existsById(smartphoneId));
     }
 
     @Test
     public void whenFindSmartphoneByName_thenReturnSmartphone() {
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("South Korea");
         country.setCode("KR");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Samsung");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
@@ -675,11 +675,11 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(2.84f);
         testEntityManager.persist(processor);
 
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Type-C");
         testEntityManager.persist(usbConnector);
 
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -709,9 +709,9 @@ public class DAOIntegrationTests {
         smartphone.setWifi(true);
         smartphone.setBluetooth(true);
 
-        smartphoneDAO.save(smartphone);
+        smartphoneDao.save(smartphone);
 
-        SmartphoneEntity foundSmartphone = smartphoneDAO.findByName("Galaxy S21");
+        Smartphone foundSmartphone = smartphoneDao.findByName("Galaxy S21");
 
         assertNotNull(foundSmartphone);
         assertEquals("Galaxy S21", foundSmartphone.getName());
@@ -721,18 +721,18 @@ public class DAOIntegrationTests {
 
     @Test
     public void testSaveStockEntity_WithNonNullValues() {
-        // Create and persist a SmartphoneEntity for the StockEntity's association
-        CountryEntity country = new CountryEntity();
+        // Create and persist a Smartphone for the Stock's association
+        Country country = new Country();
         country.setName("South Korea");
         country.setCode("KR");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Samsung");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
@@ -740,11 +740,11 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(2.84f);
         testEntityManager.persist(processor);
 
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Type-C");
         testEntityManager.persist(usbConnector);
 
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -775,36 +775,36 @@ public class DAOIntegrationTests {
         smartphone.setBluetooth(true);
         testEntityManager.persist(smartphone);
 
-        // Create and persist a StockEntity
-        StockEntity stockEntity = new StockEntity();
-        stockEntity.setSmartphone(smartphone);
-        stockEntity.setColor("Black");
-        stockEntity.setStock(100);
-        stockEntity.setPictures(List.of("pic1.jpg", "pic2.jpg"));
+        // Create and persist a Stock
+        Stock stock = new Stock();
+        stock.setSmartphone(smartphone);
+        stock.setColor("Black");
+        stock.setStock(100);
+        stock.setPictures(List.of("pic1.jpg", "pic2.jpg"));
 
-        StockEntity savedStockEntity = stockDAO.save(stockEntity);
+        Stock savedStock = stockDao.save(stock);
 
-        assertNotNull(savedStockEntity);
-        assertEquals(smartphone, savedStockEntity.getSmartphone());
-        assertEquals("Black", savedStockEntity.getColor());
-        assertEquals(100, savedStockEntity.getStock());
-        assertEquals(List.of("pic1.jpg", "pic2.jpg"), savedStockEntity.getPictures());
+        assertNotNull(savedStock);
+        assertEquals(smartphone, savedStock.getSmartphone());
+        assertEquals("Black", savedStock.getColor());
+        assertEquals(100, savedStock.getStock());
+        assertEquals(List.of("pic1.jpg", "pic2.jpg"), savedStock.getPictures());
     }
 
     @Test
-    public void whenAddStock_thenSaveInDB() {
-        // Create and persist a SmartphoneEntity for the StockEntity's association
-        CountryEntity country = new CountryEntity();
+    public void whenAddStock_thenSaveInDatabase() {
+        // Create and persist a Smartphone for the Stock's association
+        Country country = new Country();
         country.setName("South Korea");
         country.setCode("KR");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Samsung");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
@@ -812,11 +812,11 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(2.84f);
         testEntityManager.persist(processor);
 
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Type-C");
         testEntityManager.persist(usbConnector);
 
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -847,45 +847,45 @@ public class DAOIntegrationTests {
         smartphone.setBluetooth(true);
         testEntityManager.persist(smartphone);
 
-        // Create a new StockEntity
-        StockEntity stockEntity = new StockEntity();
-        stockEntity.setSmartphone(smartphone);
-        stockEntity.setColor("Black");
-        stockEntity.setStock(100);
-        stockEntity.setPictures(List.of("pic1.jpg", "pic2.jpg"));
+        // Create a new Stock
+        Stock stock = new Stock();
+        stock.setSmartphone(smartphone);
+        stock.setColor("Black");
+        stock.setStock(100);
+        stock.setPictures(List.of("pic1.jpg", "pic2.jpg"));
 
-        // Save the StockEntity to the database
-        StockEntity insertedStockEntity = stockDAO.save(stockEntity);
+        // Save the Stock to the database
+        Stock insertedStock = stockDao.save(stock);
 
-        // Assert that the inserted StockEntity has a non-null ID
-        assertNotNull(insertedStockEntity);
+        // Assert that the inserted Stock has a non-null ID
+        assertNotNull(insertedStock);
 
-        // Retrieve the inserted StockEntity from the database by ID
-        StockEntity foundStockEntity = stockDAO.findById(insertedStockEntity.getId()).orElse(null);
-        assertNotNull(foundStockEntity);
+        // Retrieve the inserted Stock from the database by ID
+        Stock foundStock = stockDao.findById(insertedStock.getId()).orElse(null);
+        assertNotNull(foundStock);
 
-        // Assert that the retrieved StockEntity's attributes match the expected values
-        assertEquals(smartphone, foundStockEntity.getSmartphone());
-        assertEquals("Black", foundStockEntity.getColor());
-        assertEquals(100, foundStockEntity.getStock());
-        assertEquals(List.of("pic1.jpg", "pic2.jpg"), foundStockEntity.getPictures());
+        // Assert that the retrieved Stock's attributes match the expected values
+        assertEquals(smartphone, foundStock.getSmartphone());
+        assertEquals("Black", foundStock.getColor());
+        assertEquals(100, foundStock.getStock());
+        assertEquals(List.of("pic1.jpg", "pic2.jpg"), foundStock.getPictures());
         // Add more assertions for other attributes as needed
     }
 
     @Test
-    public void whenUpdatetock_thenSaveInDB() {
-        // Create and persist a SmartphoneEntity for the StockEntity's association
-        CountryEntity country = new CountryEntity();
+    public void whenUpdatetock_thenSaveInDatabase() {
+        // Create and persist a Smartphone for the Stock's association
+        Country country = new Country();
         country.setName("South Korea");
         country.setCode("KR");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Samsung");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
@@ -893,11 +893,11 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(2.84f);
         testEntityManager.persist(processor);
 
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Type-C");
         testEntityManager.persist(usbConnector);
 
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -928,45 +928,45 @@ public class DAOIntegrationTests {
         smartphone.setBluetooth(true);
         testEntityManager.persist(smartphone);
 
-        // Create and persist a StockEntity
-        StockEntity stockEntity = new StockEntity();
-        stockEntity.setSmartphone(smartphone);
-        stockEntity.setColor("Black");
-        stockEntity.setStock(100);
-        stockEntity.setPictures(List.of("pic1.jpg", "pic2.jpg"));
-        testEntityManager.persist(stockEntity);
+        // Create and persist a Stock
+        Stock stock = new Stock();
+        stock.setSmartphone(smartphone);
+        stock.setColor("Black");
+        stock.setStock(100);
+        stock.setPictures(List.of("pic1.jpg", "pic2.jpg"));
+        testEntityManager.persist(stock);
 
         // Update some attributes
-        stockEntity.setColor("Blue");
-        stockEntity.setStock(50);
-        stockEntity.setPictures(List.of("pic3.jpg", "pic4.jpg"));
-        stockDAO.save(stockEntity);
+        stock.setColor("Blue");
+        stock.setStock(50);
+        stock.setPictures(List.of("pic3.jpg", "pic4.jpg"));
+        stockDao.save(stock);
 
-        // Retrieve the updated StockEntity from the database by ID
-        StockEntity updatedStockEntity = stockDAO.findById(stockEntity.getId()).orElse(null);
-        assertNotNull(updatedStockEntity);
+        // Retrieve the updated Stock from the database by ID
+        Stock updatedStock = stockDao.findById(stock.getId()).orElse(null);
+        assertNotNull(updatedStock);
 
-        // Assert that the retrieved StockEntity's attributes match the updated values
-        assertEquals("Blue", updatedStockEntity.getColor());
-        assertEquals(50, updatedStockEntity.getStock());
-        assertEquals(List.of("pic3.jpg", "pic4.jpg"), updatedStockEntity.getPictures());
+        // Assert that the retrieved Stock's attributes match the updated values
+        assertEquals("Blue", updatedStock.getColor());
+        assertEquals(50, updatedStock.getStock());
+        assertEquals(List.of("pic3.jpg", "pic4.jpg"), updatedStock.getPictures());
         // Add more assertions for other attributes as needed
     }
 
     @Test
-    public void whenDeleteStock_thenRemoveFromDB() {
-        // Create and persist a SmartphoneEntity for the StockEntity's association
-        CountryEntity country = new CountryEntity();
+    public void whenDeleteStock_thenRemoveFromDatabase() {
+        // Create and persist a Smartphone for the Stock's association
+        Country country = new Country();
         country.setName("South Korea");
         country.setCode("KR");
         testEntityManager.persist(country);
 
-        ManufacturerEntity manufacturer = new ManufacturerEntity();
+        Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Samsung");
         manufacturer.setCountry(country);
         testEntityManager.persist(manufacturer);
 
-        ProcessorEntity processor = new ProcessorEntity();
+        Processor processor = new Processor();
         processor.setTechnology(7);
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
@@ -974,11 +974,11 @@ public class DAOIntegrationTests {
         processor.setMaxFrequency(2.84f);
         testEntityManager.persist(processor);
 
-        USBConnectorEntity usbConnector = new USBConnectorEntity();
+        UsbConnector usbConnector = new UsbConnector();
         usbConnector.setName("USB Type-C");
         testEntityManager.persist(usbConnector);
 
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+        Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
         smartphone.setLength(151.7f);
@@ -1009,24 +1009,24 @@ public class DAOIntegrationTests {
         smartphone.setBluetooth(true);
         testEntityManager.persist(smartphone);
 
-        // Create and persist a StockEntity
-        StockEntity stockEntity = new StockEntity();
-        stockEntity.setSmartphone(smartphone);
-        stockEntity.setColor("Black");
-        stockEntity.setStock(100);
-        stockEntity.setPictures(List.of("pic1.jpg", "pic2.jpg"));
-        testEntityManager.persist(stockEntity);
+        // Create and persist a Stock
+        Stock stock = new Stock();
+        stock.setSmartphone(smartphone);
+        stock.setColor("Black");
+        stock.setStock(100);
+        stock.setPictures(List.of("pic1.jpg", "pic2.jpg"));
+        testEntityManager.persist(stock);
 
-        // Get the ID of the StockEntity
-        long stockEntityId = stockEntity.getId();
+        // Get the ID of the Stock
+        long stockEntityId = stock.getId();
 
-        // Check if the StockEntity exists in the database before deletion
-        assertTrue(stockDAO.existsById(stockEntityId));
+        // Check if the Stock exists in the database before deletion
+        assertTrue(stockDao.existsById(stockEntityId));
 
-        // Delete the StockEntity from the database
-        stockDAO.deleteById(stockEntityId);
+        // Delete the Stock from the database
+        stockDao.deleteById(stockEntityId);
 
-        // Check if the StockEntity exists in the database after deletion
-        assertFalse(stockDAO.existsById(stockEntityId));
+        // Check if the Stock exists in the database after deletion
+        assertFalse(stockDao.existsById(stockEntityId));
     }
 }

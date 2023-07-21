@@ -1,36 +1,35 @@
 package com.example.smartphonestore.service;
 
-import com.example.smartphonestore.dao.ManufacturerDAO;
-import com.example.smartphonestore.dao.ProcessorDAO;
-import com.example.smartphonestore.dao.SmartphoneDAO;
-import com.example.smartphonestore.dao.USBConnectorDAO;
-import com.example.smartphonestore.entity.SmartphoneEntity;
-import com.example.smartphonestore.entity.dto.SmartphoneDTO;
+import com.example.smartphonestore.dao.ManufacturerDao;
+import com.example.smartphonestore.dao.ProcessorDao;
+import com.example.smartphonestore.dao.SmartphoneDao;
+import com.example.smartphonestore.dao.UsbConnectorDao;
+import com.example.smartphonestore.entity.Smartphone;
+import com.example.smartphonestore.entity.dto.SmartphoneDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
 public class SmartphoneService {
 
-    private final SmartphoneDAO smartphoneDAO;
-    private final ManufacturerDAO manufacturerDAO;
-    private final ProcessorDAO processorDAO;
-    private final USBConnectorDAO usbConnectorDAO;
+    private final SmartphoneDao smartphoneDAO;
+    private final ManufacturerDao manufacturerDAO;
+    private final ProcessorDao processorDAO;
+    private final UsbConnectorDao usbConnectorDAO;
 
     public List<Object> getAll() {
         return List.of(smartphoneDAO.findAll());
     }
 
-    public List<SmartphoneEntity> getGamingSmartphones() {
-        List<SmartphoneEntity> smartphones = new ArrayList<>();
+    public List<Smartphone> getGamingSmartphones() {
+        List<Smartphone> smartphones = new ArrayList<>();
 
-        for (SmartphoneEntity smartphone : smartphoneDAO.findAll()) {
+        for (Smartphone smartphone : smartphoneDAO.findAll()) {
             if (smartphone.isForGaming()) {
                 smartphones.add(smartphone);
             }
@@ -39,8 +38,8 @@ public class SmartphoneService {
         return smartphones;
     }
 
-    public void add(SmartphoneDTO smartphoneDTO) {
-        SmartphoneEntity smartphone = new SmartphoneEntity();
+    public void add(SmartphoneDto smartphoneDTO) {
+        Smartphone smartphone = new Smartphone();
         smartphone.setManufacturer(manufacturerDAO.findByName(smartphoneDTO.getManufacturer()));
         smartphone.setLength(smartphoneDTO.getLength());
         smartphone.setWidth(smartphoneDTO.getWidth());
@@ -70,8 +69,8 @@ public class SmartphoneService {
         smartphoneDAO.save(smartphone);
     }
 
-    public void update(long id, SmartphoneDTO smartphoneDTO) {
-        Optional<SmartphoneEntity> smartphone = smartphoneDAO.findById(id);
+    public void update(long id, SmartphoneDto smartphoneDTO) {
+        Optional<Smartphone> smartphone = smartphoneDAO.findById(id);
         if (smartphone.isPresent()) {
             smartphone.get().setManufacturer(manufacturerDAO.findByName(smartphoneDTO.getManufacturer()));
             smartphone.get().setLength(smartphoneDTO.getLength());

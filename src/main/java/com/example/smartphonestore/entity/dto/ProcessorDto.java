@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProcessorDTO {
+public class ProcessorDto {
 
     @NotBlank(message = "Processor technology cannot be null or blank.")
     private int technology;

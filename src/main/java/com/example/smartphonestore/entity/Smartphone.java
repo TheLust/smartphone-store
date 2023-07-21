@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-public class SmartphoneEntity {
+public class Smartphone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +20,7 @@ public class SmartphoneEntity {
 
     @NotNull
     @ManyToOne
-    private ManufacturerEntity manufacturer;
+    private Manufacturer manufacturer;
 
     @Column(nullable = false)
     private float length;
@@ -47,7 +47,7 @@ public class SmartphoneEntity {
 
     @NotNull
     @ManyToOne
-    private ProcessorEntity processor;
+    private Processor processor;
 
     @Column(nullable = false)
     private int ram;
@@ -97,7 +97,7 @@ public class SmartphoneEntity {
 
     @NotNull
     @ManyToOne
-    private USBConnectorEntity usbConnector;
+    private UsbConnector usbConnector;
 
     @Column(nullable = false)
     private boolean audioConnector;

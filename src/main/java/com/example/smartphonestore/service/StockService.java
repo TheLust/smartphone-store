@@ -1,9 +1,9 @@
 package com.example.smartphonestore.service;
 
-import com.example.smartphonestore.dao.SmartphoneDAO;
-import com.example.smartphonestore.dao.StockDAO;
-import com.example.smartphonestore.entity.StockEntity;
-import com.example.smartphonestore.entity.dto.StockDTO;
+import com.example.smartphonestore.dao.SmartphoneDao;
+import com.example.smartphonestore.dao.StockDao;
+import com.example.smartphonestore.entity.Stock;
+import com.example.smartphonestore.entity.dto.StockDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +14,15 @@ import java.util.Optional;
 @Service
 public class StockService {
 
-    private final StockDAO stockDAO;
-    private final SmartphoneDAO smartphoneDAO;
+    private final StockDao stockDAO;
+    private final SmartphoneDao smartphoneDAO;
 
     public List<Object> getAll() {
         return List.of(stockDAO.findAll());
     }
 
-    public void add(StockDTO stockDTO) {
-        StockEntity stock = new StockEntity();
+    public void add(StockDto stockDTO) {
+        Stock stock = new Stock();
         stock.setSmartphone(smartphoneDAO.findByName(stockDTO.getSmartphone()));
         stock.setColor(stockDTO.getColor());
         stock.setStock(stockDTO.getStock());
@@ -30,8 +30,8 @@ public class StockService {
         stockDAO.save(stock);
     }
 
-    public void update(long id, StockDTO stockDTO) {
-        Optional<StockEntity> stock = stockDAO.findById(id);
+    public void update(long id, StockDto stockDTO) {
+        Optional<Stock> stock = stockDAO.findById(id);
         if (stock.isPresent()) {
             stock.get().setSmartphone(smartphoneDAO.findByName(stockDTO.getSmartphone()));
             stock.get().setColor(stockDTO.getColor());

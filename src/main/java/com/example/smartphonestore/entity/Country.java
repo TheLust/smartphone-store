@@ -1,6 +1,9 @@
 package com.example.smartphonestore.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -8,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
-public class CountryEntity {
+public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,6 +1,6 @@
 package com.example.smartphonestore;
 
-import com.example.smartphonestore.entity.CountryEntity;
+import com.example.smartphonestore.entity.Country;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class ExceptionTests {
 
     @Test
     public void givenCountry_whenThreeCharacterCountryCode_thenThrowException() {
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("Moldova");
         country.setCode("MDA");
 
@@ -37,7 +37,7 @@ public class ExceptionTests {
 
     @Test
     public void givenCountry_whenNullCountryName_thenThrowException() {
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setCode("MD");
 
         entityManager.persist(country);
@@ -48,7 +48,7 @@ public class ExceptionTests {
 
     @Test
     public void givenCountry_whenNullCountryCode_thenThrowException() {
-        CountryEntity country = new CountryEntity();
+        Country country = new Country();
         country.setName("Moldova");
 
         entityManager.persist(country);

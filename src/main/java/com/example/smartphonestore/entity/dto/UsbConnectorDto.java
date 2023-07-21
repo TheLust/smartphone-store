@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class USBConnectorDTO {
+public class UsbConnectorDto {
 
     @NotBlank(message = "USB connector name cannot be null or blank.")
     private String name;

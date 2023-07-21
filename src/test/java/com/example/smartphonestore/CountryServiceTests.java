@@ -1,8 +1,8 @@
 package com.example.smartphonestore;
 
-import com.example.smartphonestore.dao.CountryDAO;
-import com.example.smartphonestore.entity.CountryEntity;
-import com.example.smartphonestore.entity.dto.CountryDTO;
+import com.example.smartphonestore.dao.CountryDao;
+import com.example.smartphonestore.entity.Country;
+import com.example.smartphonestore.entity.dto.CountryDto;
 import com.example.smartphonestore.service.CountryService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,46 +22,45 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CountryServiceTests {
     @Mock
-    private CountryDAO countryDAO;
+    private CountryDao countryDao;
 
     @InjectMocks
     private CountryService countryService;
 
     @Captor
-    private ArgumentCaptor<CountryEntity> argumentCaptor;
+    private ArgumentCaptor<Country> argumentCaptor;
 
     @Test
     void givenCountry_whenAddNewLocation_thenIsInsertedInTheDatabase() {
-        CountryDTO countryDTO = new CountryDTO();
-        countryDTO.setName("Moldova");
-        countryDTO.setCode("MD");
+        Country country = new Country();
+        country.setName("Moldova");
+        country.setCode("MD");
 
-        countryService.add(countryDTO);
+        countryService.add(country);
 
-        verify(countryDAO).save(argumentCaptor.capture());
-        CountryEntity countryEntity = argumentCaptor.getValue();
-        assertThat(countryEntity.getName()).isEqualTo(countryDTO.getName());
-        assertThat(countryEntity.getCode()).isEqualTo(countryDTO.getCode());
+        verify(countryDao).save(argumentCaptor.capture());
+        Country savedCountry = argumentCaptor.getValue();
+        assertThat(savedCountry.getName()).isEqualTo(country.getName());
+        assertThat(savedCountry.getCode()).isEqualTo(country.getCode());
     }
 
     @Test
     void givenCountry_whenUpdate_thenDataIsSavedInDB() {
         long id = 123;
-        CountryDTO countryDTO = new CountryDTO();
-        countryDTO.setName("Moldova");
-        countryDTO.setCode("MD");
-        CountryEntity countryEntity = new CountryEntity();
-        countryEntity.setId(id);
-        countryEntity.setName("Moldova1");
-        countryEntity.setCode("M1");
+        Country updatedCountry = new Country();
+        updatedCountry.setName("Moldova");
+        updatedCountry.setCode("MD");
 
-        when(countryDAO.findById(any())).thenReturn(Optional.of(countryEntity));
+        Country countryToUpdate = new Country();
+        countryToUpdate.setId(id);
+        countryToUpdate.setName("Moldova1");
+        countryToUpdate.setCode("M1");
 
-        countryService.update(id, countryDTO);
+        countryService.update(countryToUpdate, updatedCountry);
 
-        verify(countryDAO).save(argumentCaptor.capture());
-        CountryEntity capturedCountryEntity = argumentCaptor.getValue();
-        assertThat(countryEntity).isEqualTo(capturedCountryEntity);
+        verify(countryDao).save(argumentCaptor.capture());
+        Country capturedCountry = argumentCaptor.getValue();
+        assertThat(countryToUpdate).isEqualTo(capturedCountry);
     }
 
 }

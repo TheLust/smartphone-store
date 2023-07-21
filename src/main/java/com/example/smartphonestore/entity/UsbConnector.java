@@ -3,11 +3,9 @@ package com.example.smartphonestore.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
-
 @Entity
 @Data
-public class ManufacturerEntity {
+public class UsbConnector {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,8 +13,4 @@ public class ManufacturerEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
-
-    @NotNull
-    @ManyToOne
-    private CountryEntity country;
 }
