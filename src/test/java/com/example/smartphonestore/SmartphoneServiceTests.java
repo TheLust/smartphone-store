@@ -24,7 +24,7 @@ public class SmartphoneServiceTests {
     private TestEntityManager entityManager;
 
     @Test
-    public void testGetGamingSmartphones() {
+    public void givenCountry_whenGetGamingSmartphones_thenReturnGamingSmartphones() {
         CountryEntity country = getCountry();
         ManufacturerEntity manufacturer = getManufacurer(country);
         ProcessorEntity processor = getProcessor(manufacturer);

@@ -31,7 +31,7 @@ public class CountryServiceTests {
     private ArgumentCaptor<CountryEntity> argumentCaptor;
 
     @Test
-    void whenAddNewLocation_ThenIsInsertedInTheDatabase() {
+    void givenCountry_whenAddNewLocation_thenIsInsertedInTheDatabase() {
         CountryDTO countryDTO = new CountryDTO();
         countryDTO.setName("Moldova");
         countryDTO.setCode("MD");
@@ -45,7 +45,7 @@ public class CountryServiceTests {
     }
 
     @Test
-    void whenUpdate_ThenDataIsSavedInDB() {
+    void givenCountry_whenUpdate_thenDataIsSavedInDB() {
         long id = 123;
         CountryDTO countryDTO = new CountryDTO();
         countryDTO.setName("Moldova");

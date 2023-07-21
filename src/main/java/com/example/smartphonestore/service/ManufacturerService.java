@@ -24,7 +24,7 @@ public class ManufacturerService {
     public void add(ManufacturerDTO manufacturerDTO) {
         ManufacturerEntity manufacturer = new ManufacturerEntity();
         manufacturer.setName(manufacturerDTO.getName());
-        manufacturer.setCountry(countryDAO.findByName(manufacturerDTO.getCountry()));
+        manufacturer.setCountry(countryDAO.findByName(manufacturerDTO.getCountry().getName()));
         manufacturerDAO.save(manufacturer);
     }
 
@@ -32,7 +32,7 @@ public class ManufacturerService {
         Optional<ManufacturerEntity> manufacturer = manufacturerDAO.findById(id);
         if (manufacturer.isPresent()) {
             manufacturer.get().setName(manufacturerDTO.getName());
-            manufacturer.get().setCountry(countryDAO.findByName(manufacturerDTO.getCountry()));
+            manufacturer.get().setCountry(countryDAO.findByName(manufacturerDTO.getCountry().getName()));
             manufacturerDAO.save(manufacturer.get());
         }
     }

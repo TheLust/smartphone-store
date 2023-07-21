@@ -89,7 +89,7 @@ public class DAOIntegrationTests {
 
         Iterable<CountryEntity> tutorials = countryDAO.findAll();
 
-        assertThat(tutorials).hasSize(2).contains(country, country3);
+        assertThat(tutorials).hasSize(3).contains(country, country3);
     }
 
     @Test
@@ -167,7 +167,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testFindManufacturerByName() {
+    public void whenFindByName_thenReturnManufacturer() {
         ManufacturerEntity manufacturer = new ManufacturerEntity();
         manufacturer.setName("LG");
         testEntityManager.persistAndFlush(manufacturer);
@@ -179,7 +179,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testUpdateManufacturer() {
+    public void whenUpdateManufacturer_thenSaveItInDB() {
         ManufacturerEntity manufacturer = new ManufacturerEntity();
         manufacturer.setName("Apple");
         testEntityManager.persistAndFlush(manufacturer);
@@ -195,7 +195,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testDeleteManufacturer() {
+    public void whenDeleteManufacturer_removeItFromDB() {
         ManufacturerEntity manufacturer = new ManufacturerEntity();
         manufacturer.setName("Google");
         testEntityManager.persistAndFlush(manufacturer);
@@ -245,7 +245,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testAddProcessor() {
+    public void whenAddProcessor_thenSaveInDB() {
         ProcessorEntity processor = new ProcessorEntity();
         processor.setTechnology(5);
         processor.setGpuModel("Adreno");
@@ -262,7 +262,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testUpdateProcessor() {
+    public void whenUpdateProcessor_thenSaveInDB() {
         ProcessorEntity processor = new ProcessorEntity();
         processor.setTechnology(7);
         processor.setGpuModel("Radeon");
@@ -281,7 +281,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testDeleteProcessor() {
+    public void whenDeleteProcessor_thenRemoveFromDB() {
         ProcessorEntity processor = new ProcessorEntity();
         processor.setTechnology(7);
         processor.setGpuModel("Radeon");
@@ -311,7 +311,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testFindUSBConnectorByName() {
+    public void whenFindUSBConnectorByName_thenReturnUSBConnector() {
         USBConnectorEntity usbConnectorEntity = new USBConnectorEntity();
         usbConnectorEntity.setName("Micro USB");
 
@@ -324,7 +324,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testUpdateUSBConnector() {
+    public void whenUpdateUSBConnector_thenSaveInDB() {
         USBConnectorEntity usbConnectorEntity = new USBConnectorEntity();
         usbConnectorEntity.setName("USB-A");
 
@@ -341,7 +341,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testDeleteUSBConnector() {
+    public void whenDeleteUSBConnector_thenSaveInDB() {
         USBConnectorEntity usbConnectorEntity = new USBConnectorEntity();
         usbConnectorEntity.setName("Lightning");
 
@@ -357,7 +357,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testInsertUSBConnector() {
+    public void whenAddUSBConnector_thenSaveInDB() {
         USBConnectorEntity usbConnectorEntity = new USBConnectorEntity();
         usbConnectorEntity.setName("USB-A");
 
@@ -457,7 +457,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testInsertSmartphone() {
+    public void whenAddSmartphone_thenSaveInDB() {
         CountryEntity country = new CountryEntity();
         country.setName("South Korea");
         country.setCode("KR");
@@ -517,7 +517,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testUpdateSmartphone() {
+    public void whenUpdateSmartphone_thenSaveInDB() {
         CountryEntity country = new CountryEntity();
         country.setName("South Korea");
         country.setCode("KR");
@@ -592,7 +592,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testDeleteSmartphone() {
+    public void whenDeleteSmartphone_thenRemoveFromDB() {
         CountryEntity country = new CountryEntity();
         country.setName("South Korea");
         country.setCode("KR");
@@ -656,7 +656,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testFindSmartphoneByName() {
+    public void whenFindSmartphoneByName_thenReturnSmartphone() {
         CountryEntity country = new CountryEntity();
         country.setName("South Korea");
         country.setCode("KR");
@@ -792,7 +792,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testInsertStockEntity() {
+    public void whenAddStock_thenSaveInDB() {
         // Create and persist a SmartphoneEntity for the StockEntity's association
         CountryEntity country = new CountryEntity();
         country.setName("South Korea");
@@ -873,7 +873,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testUpdateStockEntity() {
+    public void whenUpdatetock_thenSaveInDB() {
         // Create and persist a SmartphoneEntity for the StockEntity's association
         CountryEntity country = new CountryEntity();
         country.setName("South Korea");
@@ -954,7 +954,7 @@ public class DAOIntegrationTests {
     }
 
     @Test
-    public void testDeleteStockEntity() {
+    public void whenDeleteStock_thenRemoveFromDB() {
         // Create and persist a SmartphoneEntity for the StockEntity's association
         CountryEntity country = new CountryEntity();
         country.setName("South Korea");
