@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Data
@@ -11,28 +12,28 @@ public class Smartphone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     //General information
 
     @Column(nullable = false, unique = true)
     private String name;
 
-    @NotNull
-    @ManyToOne
+    @NotNull(message = "Smartphone manufacturer cannot be null.")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Manufacturer manufacturer;
 
     @Column(nullable = false)
-    private float length;
+    private Double length;
 
     @Column(nullable = false)
-    private float width;
+    private Double width;
 
     @Column(nullable = false)
-    private float thickness;
+    private Double thickness;
 
     @Column(nullable = false)
-    private int mass;
+    private Integer mass;
 
     @Column(nullable = false)
     private String modelCode;
@@ -41,33 +42,33 @@ public class Smartphone {
     private String model;
 
     @Column(nullable = false)
-    private int yearOfRelease;
+    private Integer yearOfRelease;
 
     //Technical information
 
-    @NotNull
-    @ManyToOne
+    @NotNull(message = "Smartphone processor cannot be null.")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Processor processor;
 
     @Column(nullable = false)
-    private int ram;
+    private Integer ram;
 
     @Column(nullable = false)
-    private int rom;
+    private Integer rom;
 
     @Column(nullable = false)
-    private int batteryCapacity;
+    private Integer batteryCapacity;
 
     @Column(nullable = false)
-    private int fastCharging;
+    private Integer fastCharging;
 
     //Display
 
     @Column(nullable = false)
-    private int displayHeight;
+    private Integer displayHeight;
 
     @Column(nullable = false)
-    private int displayWidth;
+    private Integer displayWidth;
 
     @Column(nullable = false)
     private String displayType;
@@ -76,16 +77,16 @@ public class Smartphone {
     private String displayProtection;
 
     @Column(nullable = false)
-    private float displaySize;
+    private Double displaySize;
 
     @Column(nullable = false)
-    private int pixelDensity;
+    private Integer pixelDensity;
 
     @Column(nullable = false)
     private boolean alwaysOnDisplay;
 
     @Column(nullable = false)
-    private int refreshRate;
+    private Integer refreshRate;
 
     //Connectivity
 
@@ -96,7 +97,7 @@ public class Smartphone {
     private boolean nfc;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private UsbConnector usbConnector;
 
     @Column(nullable = false)
@@ -108,8 +109,18 @@ public class Smartphone {
     @Column(nullable = false)
     private boolean bluetooth;
 
+    @OneToMany(mappedBy = "smartphone")
+    private List<Stock> stocks;
+
     public boolean isForGaming() {
-        return processor.getTechnology() <= 5 && refreshRate >= 90 && displayWidth >= 1080 && rom >= 128 && batteryCapacity >= 4500 && fastCharging >= 30 && ram >= 6 && audioConnector;
+        return processor.getTechnology() <= 5 &&
+                refreshRate >= 90 &&
+                displayWidth >= 1080 &&
+                rom >= 128 &&
+                batteryCapacity >= 4500 &&
+                fastCharging >= 30 &&
+                ram >= 6 &&
+                audioConnector;
     }
 
     public double calculateScreenToBodyRatio() {

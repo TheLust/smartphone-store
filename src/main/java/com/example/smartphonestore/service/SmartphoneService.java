@@ -40,7 +40,7 @@ public class SmartphoneService {
 
     public void add(SmartphoneDto smartphoneDTO) {
         Smartphone smartphone = new Smartphone();
-        smartphone.setManufacturer(manufacturerDAO.findByName(smartphoneDTO.getManufacturer()));
+        smartphone.setManufacturer(manufacturerDAO.findByName(smartphoneDTO.getManufacturer().getName()));
         smartphone.setLength(smartphoneDTO.getLength());
         smartphone.setWidth(smartphoneDTO.getWidth());
         smartphone.setThickness(smartphoneDTO.getThickness());
@@ -48,7 +48,7 @@ public class SmartphoneService {
         smartphone.setModelCode(smartphoneDTO.getModelCode());
         smartphone.setModel(smartphoneDTO.getModel());
         smartphone.setYearOfRelease(smartphoneDTO.getYearOfRelease());
-        smartphone.setProcessor(processorDAO.findByModel(smartphoneDTO.getProcessor()));
+        smartphone.setProcessor(processorDAO.findByModel(smartphoneDTO.getProcessor().getModel()));
         smartphone.setRam(smartphoneDTO.getRam());
         smartphone.setRom(smartphoneDTO.getRom());
         smartphone.setBatteryCapacity(smartphoneDTO.getBatteryCapacity());
@@ -62,7 +62,7 @@ public class SmartphoneService {
         smartphone.setAlwaysOnDisplay(smartphoneDTO.isAlwaysOnDisplay());
         smartphone.setGps(smartphoneDTO.isGps());
         smartphone.setNfc(smartphoneDTO.isNfc());
-        smartphone.setUsbConnector(usbConnectorDAO.findByName(smartphoneDTO.getUsbConnector()));
+        smartphone.setUsbConnector(usbConnectorDAO.findByName(smartphoneDTO.getUsbConnector().getName()));
         smartphone.setAudioConnector(smartphoneDTO.isAudioConnector());
         smartphone.setWifi(smartphoneDTO.isWifi());
         smartphone.setBluetooth(smartphoneDTO.isBluetooth());
@@ -72,7 +72,7 @@ public class SmartphoneService {
     public void update(long id, SmartphoneDto smartphoneDTO) {
         Optional<Smartphone> smartphone = smartphoneDAO.findById(id);
         if (smartphone.isPresent()) {
-            smartphone.get().setManufacturer(manufacturerDAO.findByName(smartphoneDTO.getManufacturer()));
+            smartphone.get().setManufacturer(manufacturerDAO.findByName(smartphoneDTO.getManufacturer().getName()));
             smartphone.get().setLength(smartphoneDTO.getLength());
             smartphone.get().setWidth(smartphoneDTO.getWidth());
             smartphone.get().setThickness(smartphoneDTO.getThickness());
@@ -80,7 +80,7 @@ public class SmartphoneService {
             smartphone.get().setModelCode(smartphoneDTO.getModelCode());
             smartphone.get().setModel(smartphoneDTO.getModel());
             smartphone.get().setYearOfRelease(smartphoneDTO.getYearOfRelease());
-            smartphone.get().setProcessor(processorDAO.findByModel(smartphoneDTO.getProcessor()));
+            smartphone.get().setProcessor(processorDAO.findByModel(smartphoneDTO.getProcessor().getModel()));
             smartphone.get().setRam(smartphoneDTO.getRam());
             smartphone.get().setRom(smartphoneDTO.getRom());
             smartphone.get().setBatteryCapacity(smartphoneDTO.getBatteryCapacity());
@@ -94,7 +94,7 @@ public class SmartphoneService {
             smartphone.get().setAlwaysOnDisplay(smartphoneDTO.isAlwaysOnDisplay());
             smartphone.get().setGps(smartphoneDTO.isGps());
             smartphone.get().setNfc(smartphoneDTO.isNfc());
-            smartphone.get().setUsbConnector(usbConnectorDAO.findByName(smartphoneDTO.getUsbConnector()));
+            smartphone.get().setUsbConnector(usbConnectorDAO.findByName(smartphoneDTO.getUsbConnector().getName()));
             smartphone.get().setAudioConnector(smartphoneDTO.isAudioConnector());
             smartphone.get().setWifi(smartphoneDTO.isWifi());
             smartphone.get().setBluetooth(smartphoneDTO.isBluetooth());

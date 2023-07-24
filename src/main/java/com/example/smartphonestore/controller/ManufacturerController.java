@@ -1,9 +1,13 @@
 package com.example.smartphonestore.controller;
 
+import com.example.smartphonestore.controller.interfaces.ManufacturerOperations;
+import com.example.smartphonestore.entity.Country;
 import com.example.smartphonestore.entity.Manufacturer;
 import com.example.smartphonestore.entity.dto.ManufacturerDto;
-import com.example.smartphonestore.exceptions.NotFoundException;
-import com.example.smartphonestore.mappers.ManufacturerMapper;
+import com.example.smartphonestore.exception.FieldNotExpected;
+import com.example.smartphonestore.exception.NotFoundException;
+import com.example.smartphonestore.mapper.ManufacturerMapper;
+import com.example.smartphonestore.service.CountryService;
 import com.example.smartphonestore.service.ManufacturerService;
 import com.example.smartphonestore.util.ErrorResponse;
 import com.example.smartphonestore.validator.ManufacturerValidator;
@@ -12,21 +16,22 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
 @RestController
 @AllArgsConstructor
 @RequestMapping("/manufacturers")
-public class ManufacturerController {
+public class ManufacturerController implements ManufacturerOperations {
 
     @Autowired
     private final ManufacturerService manufacturerService;
+
+    @Autowired
+    private final CountryService countryService;
 
     @Autowired
     private final ManufacturerValidator manufacturerValidator;
@@ -34,7 +39,7 @@ public class ManufacturerController {
     @Autowired
     private final ManufacturerMapper manufacturerMapper;
 
-    @GetMapping("/")
+    @Override
     public List<ManufacturerDto> list() {
         return manufacturerService.getAll()
                 .stream()
@@ -42,11 +47,24 @@ public class ManufacturerController {
                 .toList();
     }
 
-    @PostMapping("/")
-    public ResponseEntity<String> saveManufacturer(@RequestBody @Valid ManufacturerDto manufacturerDto,
-                                                   BindingResult bindingResult) {
+    @Override
+    public ResponseEntity<String> save(@RequestBody @Valid ManufacturerDto manufacturerDto,
+                                       @RequestParam("countryId") Long countryId,
+                                       BindingResult bindingResult) {
 
         Manufacturer manufacturer = manufacturerMapper.convertToManufacturer(manufacturerDto);
+
+        if (manufacturer.getCountry() != null) {
+            throw new FieldNotExpected("Expected country id as parameter.");
+        }
+
+        Optional<Country> country = countryService.getById(countryId);
+
+        if (country.isEmpty()) {
+            throw new NotFoundException("Country with this id not found.");
+        }
+
+        manufacturer.setCountry(country.get());
 
         manufacturerValidator.validate(manufacturer, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -58,33 +76,50 @@ public class ManufacturerController {
         return new ResponseEntity<>("Added.", HttpStatus.OK);
     }
 
-    @PutMapping("/")
-    public ResponseEntity<String> updateManufacturer(@RequestParam("id") Long id,
-                                                     @RequestBody @Valid ManufacturerDto manufacturerDto,
-                                                     BindingResult bindingResult) {
+    @Override
+    public ResponseEntity<String> update(@PathVariable("manufacturer_id") Long manufacturerId,
+                                         @RequestBody @Valid ManufacturerDto manufacturerDto,
+                                         @RequestParam(value = "countryId", required = false) Long countryId,
+                                         BindingResult bindingResult) {
 
-        Optional<Manufacturer> manufacturerToUpdate = manufacturerService.getById(id);
-        if (manufacturerToUpdate.isEmpty())
+        Optional<Manufacturer> manufacturerToUpdate = manufacturerService.getById(manufacturerId);
+        if (manufacturerToUpdate.isEmpty()) {
             throw new NotFoundException("Manufacturer not found.");
-
-        Manufacturer manufacturer = manufacturerMapper.convertToManufacturer(manufacturerDto);
-
-        manufacturerValidator.validate(manufacturer, bindingResult);
-        if (bindingResult.hasErrors()) {
-            ErrorResponse.returnErrors(bindingResult);
         }
 
-        manufacturerService.update(manufacturerToUpdate.get(), manufacturer);
+        Manufacturer updatedManufacturer = manufacturerMapper.convertToManufacturer(manufacturerDto);
+
+        if (!updatedManufacturer.getName().equals(manufacturerToUpdate.get().getName())) {
+            manufacturerValidator.validate(updatedManufacturer, bindingResult);
+            if (bindingResult.hasErrors()) {
+                ErrorResponse.returnErrors(bindingResult);
+            }
+        }
+
+        if (updatedManufacturer.getCountry() != null) {
+            throw new FieldNotExpected("Expected country id as parameter.");
+        }
+
+        if (countryId != null) {
+            Optional<Country> country = countryService.getById(countryId);
+            if (country.isEmpty()) {
+                throw new NotFoundException("Country with this id not found.");
+            }
+
+            updatedManufacturer.setCountry(country.get());
+        }
+
+        manufacturerService.update(manufacturerToUpdate.get(), updatedManufacturer);
 
         return new ResponseEntity<>("Updated.", HttpStatus.OK);
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity<String> deleteManufacturer(@RequestParam("id") Long id) {
-        Optional<Manufacturer> manufacturerToUpdate = manufacturerService.getById(id);
-        if (manufacturerToUpdate.isEmpty())
+    @Override
+    public ResponseEntity<String> delete(@RequestParam("id") Long id) {
+        Optional<Manufacturer> manufacturer = manufacturerService.getById(id);
+        if (manufacturer.isEmpty()) {
             throw new NotFoundException("Manufacturer not found.");
-
+        }
         manufacturerService.delete(id);
 
         return new ResponseEntity<>("Deleted.", HttpStatus.OK);

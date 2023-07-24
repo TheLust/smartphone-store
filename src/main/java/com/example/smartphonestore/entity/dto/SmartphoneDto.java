@@ -17,20 +17,19 @@ public class SmartphoneDto {
     @NotBlank(message = "Smartphone name cannot be null or blank.")
     private String name;
 
-    @NotBlank(message = "Smartphone manufacturer cannot be null or blank.")
-    private String manufacturer;
+    private ManufacturerDto manufacturer;
 
     @NotBlank(message = "Smartphone length cannot be null or blank.")
-    private float length;
+    private Double length;
 
     @NotBlank(message = "Smartphone width cannot be null or blank.")
-    private float width;
+    private Double width;
 
     @NotBlank(message = "Smartphone thickness cannot be null or blank.")
-    private float thickness;
+    private Double thickness;
 
     @NotBlank(message = "Smartphone mass cannot be null or blank.")
-    private int mass;
+    private Integer mass;
 
     @NotBlank(message = "Smartphone model code cannot be null or blank.")
     private String modelCode;
@@ -39,32 +38,31 @@ public class SmartphoneDto {
     private String model;
 
     @NotBlank(message = "Smartphone year of release cannot be null or blank.")
-    private int yearOfRelease;
+    private Integer yearOfRelease;
 
     //Technical information
 
-    @NotBlank(message = "Smartphone processor cannot be null or blank.")
-    private String processor; //model
+    private ProcessorDto processor;
 
     @NotBlank(message = "Smartphone RAM cannot be null or blank.")
-    private int ram;
+    private Integer ram;
 
     @NotBlank(message = "Smartphone ROM cannot be null or blank.")
-    private int rom;
+    private Integer rom;
 
     @NotBlank(message = "Smartphone battery capacity cannot be null or blank.")
-    private int batteryCapacity;
+    private Integer batteryCapacity;
 
     @NotBlank(message = "Smartphone fast charging cannot be null or blank.")
-    private int fastCharging;
+    private Integer fastCharging;
 
     //Display
 
     @NotBlank(message = "Smartphone display height cannot be null or blank.")
-    private int displayHeight;
+    private Integer displayHeight;
 
     @NotBlank(message = "Smartphone display width cannot be null or blank.")
-    private int displayWidth;
+    private Integer displayWidth;
 
     @NotBlank(message = "Smartphone display type cannot be null or blank.")
     private String displayType;
@@ -73,16 +71,16 @@ public class SmartphoneDto {
     private String displayProtection;
 
     @NotBlank(message = "Smartphone display size cannot be null or blank.")
-    private float displaySize;
+    private Double displaySize;
 
     @NotBlank(message = "Smartphone pixel density cannot be null or blank.")
-    private int pixelDensity;
+    private Integer pixelDensity;
 
     @NotBlank(message = "Smartphone always on display cannot be null or blank.")
     private boolean alwaysOnDisplay;
 
     @NotBlank(message = "Smartphone refresh rate cannot be null or blank.")
-    private int refreshRate;
+    private Integer refreshRate;
 
     //Connectivity
 
@@ -92,8 +90,7 @@ public class SmartphoneDto {
     @NotBlank(message = "Smartphone NFC cannot be null or blank.")
     private boolean nfc;
 
-    @NotBlank(message = "Smartphone USB connector cannot be null or blank.")
-    private String usbConnector; //name
+    private UsbConnectorDto usbConnector;
 
     @NotBlank(message = "Smartphone audio connector cannot be null or blank.")
     private boolean audioConnector;

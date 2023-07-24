@@ -90,9 +90,9 @@ public class SmartphoneServiceTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -106,7 +106,7 @@ public class SmartphoneServiceTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);

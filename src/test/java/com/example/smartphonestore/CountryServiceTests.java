@@ -2,7 +2,6 @@ package com.example.smartphonestore;
 
 import com.example.smartphonestore.dao.CountryDao;
 import com.example.smartphonestore.entity.Country;
-import com.example.smartphonestore.entity.dto.CountryDto;
 import com.example.smartphonestore.service.CountryService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,12 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class CountryServiceTests {

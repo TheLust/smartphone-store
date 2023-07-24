@@ -31,8 +31,11 @@ public class ManufacturerService {
     }
 
     public void update(Manufacturer manufacturerToUpdate, Manufacturer updatedManufacturer) {
-        manufacturerToUpdate.setName(updatedManufacturer.getName());
-        manufacturerToUpdate.setCountry(updatedManufacturer.getCountry());
+        if (updatedManufacturer.getName() != null)
+            manufacturerToUpdate.setName(updatedManufacturer.getName());
+
+        if (updatedManufacturer.getCountry() != null)
+            manufacturerToUpdate.setCountry(updatedManufacturer.getCountry());
         manufacturerDao.save(manufacturerToUpdate);
     }
 

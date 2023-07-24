@@ -228,7 +228,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Radeon");
         processor.setModel("Ryzen 9 5950X");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(4.9f);
+        processor.setMaxFrequency(4.9);
         testEntityManager.persistAndFlush(processor);
 
         Processor savedProcessor = processorDao.findByModel("Ryzen 9 5950X");
@@ -386,7 +386,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(2.84f);
+        processor.setMaxFrequency(2.84);
         testEntityManager.persist(processor);
 
         UsbConnector usbConnector = new UsbConnector();
@@ -396,9 +396,9 @@ public class DaoIntegrationTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -412,7 +412,7 @@ public class DaoIntegrationTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);
@@ -428,9 +428,9 @@ public class DaoIntegrationTests {
         assertNotNull(savedSmartphone);
         assertEquals("Galaxy S21", savedSmartphone.getName());
         assertEquals(manufacturer, savedSmartphone.getManufacturer());
-        assertEquals(151.7f, savedSmartphone.getLength());
-        assertEquals(71.2f, savedSmartphone.getWidth());
-        assertEquals(7.9f, savedSmartphone.getThickness());
+        assertEquals(151.7, savedSmartphone.getLength());
+        assertEquals(71.2, savedSmartphone.getWidth());
+        assertEquals(7.9, savedSmartphone.getThickness());
         assertEquals(171, savedSmartphone.getMass());
         assertEquals("SM-G991", savedSmartphone.getModelCode());
         assertEquals("S21", savedSmartphone.getModel());
@@ -444,7 +444,7 @@ public class DaoIntegrationTests {
         assertEquals(1080, savedSmartphone.getDisplayWidth());
         assertEquals("Dynamic AMOLED 2X", savedSmartphone.getDisplayType());
         assertEquals("Gorilla Glass Victus", savedSmartphone.getDisplayProtection());
-        assertEquals(6.2f, savedSmartphone.getDisplaySize());
+        assertEquals(6.2, savedSmartphone.getDisplaySize());
         assertEquals(421, savedSmartphone.getPixelDensity());
         assertTrue(savedSmartphone.isAlwaysOnDisplay());
         assertEquals(120, savedSmartphone.getRefreshRate());
@@ -473,7 +473,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(2.84f);
+        processor.setMaxFrequency(2.84);
         testEntityManager.persist(processor);
 
         UsbConnector usbConnector = new UsbConnector();
@@ -483,9 +483,9 @@ public class DaoIntegrationTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -499,7 +499,7 @@ public class DaoIntegrationTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);
@@ -533,7 +533,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(2.84f);
+        processor.setMaxFrequency(2.84);
         testEntityManager.persist(processor);
 
         UsbConnector usbConnector = new UsbConnector();
@@ -543,9 +543,9 @@ public class DaoIntegrationTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -559,7 +559,7 @@ public class DaoIntegrationTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);
@@ -577,9 +577,9 @@ public class DaoIntegrationTests {
         assertNotNull(foundSmartphone);
 
         // Update some attributes
-        foundSmartphone.setLength(153.9f);
-        foundSmartphone.setWidth(74.4f);
-        foundSmartphone.setThickness(8.9f);
+        foundSmartphone.setLength(153.9);
+        foundSmartphone.setWidth(74.4);
+        foundSmartphone.setThickness(8.9);
         foundSmartphone.setRam(12);
         smartphoneDao.save(foundSmartphone);
 
@@ -608,7 +608,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(2.84f);
+        processor.setMaxFrequency(2.84);
         testEntityManager.persist(processor);
 
         UsbConnector usbConnector = new UsbConnector();
@@ -618,9 +618,9 @@ public class DaoIntegrationTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -634,7 +634,7 @@ public class DaoIntegrationTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);
@@ -672,7 +672,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(2.84f);
+        processor.setMaxFrequency(2.84);
         testEntityManager.persist(processor);
 
         UsbConnector usbConnector = new UsbConnector();
@@ -682,9 +682,9 @@ public class DaoIntegrationTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -698,7 +698,7 @@ public class DaoIntegrationTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);
@@ -737,7 +737,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(2.84f);
+        processor.setMaxFrequency(2.84);
         testEntityManager.persist(processor);
 
         UsbConnector usbConnector = new UsbConnector();
@@ -747,9 +747,9 @@ public class DaoIntegrationTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -763,7 +763,7 @@ public class DaoIntegrationTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);
@@ -809,7 +809,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(2.84f);
+        processor.setMaxFrequency(2.84);
         testEntityManager.persist(processor);
 
         UsbConnector usbConnector = new UsbConnector();
@@ -819,9 +819,9 @@ public class DaoIntegrationTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -835,7 +835,7 @@ public class DaoIntegrationTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);
@@ -890,7 +890,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(2.84f);
+        processor.setMaxFrequency(2.84);
         testEntityManager.persist(processor);
 
         UsbConnector usbConnector = new UsbConnector();
@@ -900,9 +900,9 @@ public class DaoIntegrationTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -916,7 +916,7 @@ public class DaoIntegrationTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);
@@ -971,7 +971,7 @@ public class DaoIntegrationTests {
         processor.setGpuModel("Adreno");
         processor.setModel("Snapdragon 888");
         processor.setManufacturer(manufacturer);
-        processor.setMaxFrequency(2.84f);
+        processor.setMaxFrequency(2.84);
         testEntityManager.persist(processor);
 
         UsbConnector usbConnector = new UsbConnector();
@@ -981,9 +981,9 @@ public class DaoIntegrationTests {
         Smartphone smartphone = new Smartphone();
         smartphone.setName("Galaxy S21");
         smartphone.setManufacturer(manufacturer);
-        smartphone.setLength(151.7f);
-        smartphone.setWidth(71.2f);
-        smartphone.setThickness(7.9f);
+        smartphone.setLength(151.7);
+        smartphone.setWidth(71.2);
+        smartphone.setThickness(7.9);
         smartphone.setMass(171);
         smartphone.setModelCode("SM-G991");
         smartphone.setModel("S21");
@@ -997,7 +997,7 @@ public class DaoIntegrationTests {
         smartphone.setDisplayWidth(1080);
         smartphone.setDisplayType("Dynamic AMOLED 2X");
         smartphone.setDisplayProtection("Gorilla Glass Victus");
-        smartphone.setDisplaySize(6.2f);
+        smartphone.setDisplaySize(6.2);
         smartphone.setPixelDensity(421);
         smartphone.setAlwaysOnDisplay(true);
         smartphone.setRefreshRate(120);

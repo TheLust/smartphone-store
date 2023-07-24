@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class ProcessorDto {
 
     @NotBlank(message = "Processor technology cannot be null or blank.")
-    private int technology;
+    private Integer technology;
 
     @NotBlank(message = "Processor GPU model cannot be null or blank.")
     private String gpuModel;
@@ -22,9 +22,8 @@ public class ProcessorDto {
     @NotBlank(message = "Processor model cannot be null or blank.")
     private String model;
 
-    @NotBlank(message = "Processor manufacturer cannot be null or blank.")
-    private String manufacturer;
-
     @NotBlank(message = "Processor maximum frequency cannot be null or blank.")
-    private double maxFrequency;
+    private Double maxFrequency;
+
+    private ManufacturerDto manufacturer;
 }

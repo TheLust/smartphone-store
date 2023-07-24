@@ -1,6 +1,6 @@
 package com.example.smartphonestore.util;
 
-import com.example.smartphonestore.exceptions.AlreadyExistsException;
+import com.example.smartphonestore.exception.AlreadyExistsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 

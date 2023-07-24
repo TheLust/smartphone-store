@@ -1,4 +1,4 @@
-package com.example.smartphonestore.exceptions;
+package com.example.smartphonestore.exception;
 
 public class AlreadyExistsException extends RuntimeException{
 

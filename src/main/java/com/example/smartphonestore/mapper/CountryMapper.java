@@ -1,4 +1,4 @@
-package com.example.smartphonestore.mappers;
+package com.example.smartphonestore.mapper;
 
 import com.example.smartphonestore.entity.Country;
 import com.example.smartphonestore.entity.dto.CountryDto;

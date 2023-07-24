@@ -36,8 +36,8 @@ public class SmartphoneTests {
         smartphone.setAudioConnector(true);
 
         //Set display and sizes
-        smartphone.setLength(150.0f);
-        smartphone.setWidth(75.0f);
+        smartphone.setLength(150.0);
+        smartphone.setWidth(75.0);
         smartphone.setDisplayHeight(2560);
         smartphone.setDisplayWidth(1440);
     }

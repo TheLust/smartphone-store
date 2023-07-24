@@ -1,6 +1,5 @@
 package com.example.smartphonestore.entity;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,7 +12,7 @@ public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotNull
     @ManyToOne
@@ -23,7 +22,7 @@ public class Stock {
     private String color;
 
     @Column(nullable = false)
-    private int stock;
+    private Integer stock;
 
     private List<String> pictures;
 }

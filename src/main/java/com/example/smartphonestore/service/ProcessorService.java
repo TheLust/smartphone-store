@@ -1,9 +1,7 @@
 package com.example.smartphonestore.service;
 
-import com.example.smartphonestore.dao.ManufacturerDao;
 import com.example.smartphonestore.dao.ProcessorDao;
 import com.example.smartphonestore.entity.Processor;
-import com.example.smartphonestore.entity.dto.ProcessorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,36 +12,49 @@ import java.util.Optional;
 @Service
 public class ProcessorService {
 
-    private final ProcessorDao processorDAO;
-    private final ManufacturerDao manufacturerDAO;
+    private final ProcessorDao processorDao;
 
-    public List<Object> getAll() {
-        return List.of(processorDAO.findAll());
+    public List<Processor> getAll() {
+        return processorDao.findAll();
     }
 
-    public void add(ProcessorDto processorDTO) {
-        Processor processor = new Processor();
-        processor.setTechnology(processorDTO.getTechnology());
-        processor.setModel(processorDTO.getModel());
-        processor.setGpuModel(processorDTO.getGpuModel());
-        processor.setMaxFrequency(processorDTO.getMaxFrequency());
-        processor.setManufacturer(manufacturerDAO.findByName(processorDTO.getManufacturer()));
-        processorDAO.save(processor);
+    public Processor getByModel(String model) {
+        return processorDao.findByModel(model);
     }
 
-    public void update(long id, ProcessorDto processorDTO) {
-        Optional<Processor> processor = processorDAO.findById(id);
-        if (processor.isPresent()) {
-            processor.get().setTechnology(processorDTO.getTechnology());
-            processor.get().setModel(processorDTO.getModel());
-            processor.get().setGpuModel(processorDTO.getGpuModel());
-            processor.get().setMaxFrequency(processorDTO.getMaxFrequency());
-            processor.get().setManufacturer(manufacturerDAO.findByName(processorDTO.getManufacturer()));
-            processorDAO.save(processor.get());
+    public Optional<Processor> getById(Long id) {
+        return  processorDao.findById(id);
+    }
+
+    public void add(Processor processor) {
+        processorDao.save(processor);
+    }
+
+    public void update(Processor processorToUpdate, Processor updatedProcessor) {
+        if (updatedProcessor.getTechnology() != null) {
+            processorToUpdate.setTechnology(updatedProcessor.getTechnology());
         }
+
+        if (updatedProcessor.getModel() != null) {
+            processorToUpdate.setModel(updatedProcessor.getModel());
+        }
+
+        if (updatedProcessor.getGpuModel() != null) {
+            processorToUpdate.setGpuModel(updatedProcessor.getGpuModel());
+        }
+
+        if (updatedProcessor.getMaxFrequency() != null) {
+            processorToUpdate.setMaxFrequency(updatedProcessor.getMaxFrequency());
+        }
+
+        if (updatedProcessor.getManufacturer() != null) {
+            processorToUpdate.setManufacturer(updatedProcessor.getManufacturer());
+        }
+
+        processorDao.save(processorToUpdate);
     }
 
-    public void delete(long id) {
-        processorDAO.deleteById(id);
+    public void delete(Long id) {
+        processorDao.deleteById(id);
     }
 }

@@ -3,7 +3,9 @@ package com.example.smartphonestore.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Data
@@ -11,21 +13,24 @@ public class Processor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
-    @Column(nullable = false)
-    private int technology;
+    @NotBlank(message = "Processor technology cannot be null or blank.")
+    private Integer technology;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Processor GPU model cannot be null or blank.")
     private String gpuModel;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Processor model cannot be null or blank.")
     private String model;
 
-    @NotNull
-    @ManyToOne
+    @NotNull(message = "Processor manufacturer cannot be null.")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Manufacturer manufacturer;
 
-    @Column(nullable = false)
-    private double maxFrequency;
+    @NotBlank(message = "Processor maximum frequency cannot be null or blank.")
+    private Double maxFrequency;
+
+    @OneToMany(mappedBy = "processor")
+    private List<Smartphone> smartphones;
 }

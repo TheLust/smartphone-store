@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -14,14 +15,14 @@ import java.util.List;
 @AllArgsConstructor
 public class StockDto {
 
-    @NotBlank(message = "Smartphone cannot be null or blank.")
-    private String smartphone;
+    @NotNull(message = "Smartphone cannot be null.")
+    private SmartphoneDto smartphone;
 
     @NotBlank(message = "Color cannot be null or blank.")
     private String color;
 
     @NotBlank(message = "Stock cannot be null or blank.")
-    private int stock;
+    private Integer stock;
 
     private List<String> pictures;
 }

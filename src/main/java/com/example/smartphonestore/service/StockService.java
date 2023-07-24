@@ -23,7 +23,7 @@ public class StockService {
 
     public void add(StockDto stockDTO) {
         Stock stock = new Stock();
-        stock.setSmartphone(smartphoneDAO.findByName(stockDTO.getSmartphone()));
+        stock.setSmartphone(smartphoneDAO.findByName(stockDTO.getSmartphone().getName()));
         stock.setColor(stockDTO.getColor());
         stock.setStock(stockDTO.getStock());
         stock.setPictures(stockDTO.getPictures());
@@ -33,7 +33,7 @@ public class StockService {
     public void update(long id, StockDto stockDTO) {
         Optional<Stock> stock = stockDAO.findById(id);
         if (stock.isPresent()) {
-            stock.get().setSmartphone(smartphoneDAO.findByName(stockDTO.getSmartphone()));
+            stock.get().setSmartphone(smartphoneDAO.findByName(stockDTO.getSmartphone().getName()));
             stock.get().setColor(stockDTO.getColor());
             stock.get().setStock(stockDTO.getStock());
             stock.get().setPictures(stockDTO.getPictures());
