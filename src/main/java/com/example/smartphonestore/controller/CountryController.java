@@ -114,4 +114,11 @@ public class CountryController implements CountryOperations {
                 .map(manufacturerMapper::convertToManufacturerDto)
                 .toList();
     }
+
+    @GetMapping("/sorted")
+    public List<CountryDto> getSortedCountries() {
+        List<CountryDto> countries = new java.util.ArrayList<>(countryService.getAll().stream().map(countryMapper::convertToCountryDto).toList());
+        countries.sort(new CountryComparator());
+        return countries;
+    }
 }
