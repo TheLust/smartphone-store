@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
-
 @Entity
 @Data
 public class Country {
@@ -25,4 +24,8 @@ public class Country {
 
     @OneToMany(mappedBy = "country")
     private List<Manufacturer> manufacturers;
+
+    public void setCode(String code) {
+        this.code = code.toUpperCase();
+    }
 }

@@ -60,7 +60,7 @@ public class ProcessorController implements ProcessorOperations {
         Optional<Manufacturer> manufacturer = manufacturerService.getById(manufacturerId);
 
         if (manufacturer.isEmpty()) {
-            throw  new NotFoundException("Manufacturer with this id no found.");
+            throw new NotFoundException("Manufacturer with this id no found.");
         }
 
         processor.setManufacturer(manufacturer.get());

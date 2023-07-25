@@ -1,8 +1,10 @@
 package com.example.smartphonestore.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -16,32 +18,37 @@ public class Smartphone {
 
     //General information
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "Smartphone name cannot be null or blank.") //unique
     private String name;
 
     @NotNull(message = "Smartphone manufacturer cannot be null.")
     @ManyToOne(cascade = CascadeType.ALL)
     private Manufacturer manufacturer;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative length.")
+    @NotBlank(message = "Smartphone length cannot be null or blank.")
     private Double length;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative width.")
+    @NotBlank(message = "Smartphone width cannot be null or blank.")
     private Double width;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative thickness.")
+    @NotBlank(message = "Smartphone thickness cannot be null or blank.")
     private Double thickness;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative mass.")
+    @NotBlank(message = "Smartphone mass cannot be null or blank.")
     private Integer mass;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Smartphone model code cannot be null or blank.")
     private String modelCode;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Smartphone model cannot be null or blank.")
     private String model;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative year of release.")
+    @NotBlank(message = "Smartphone year of release cannot be null or blank.")
     private Integer yearOfRelease;
 
     //Technical information
@@ -50,64 +57,73 @@ public class Smartphone {
     @ManyToOne(cascade = CascadeType.ALL)
     private Processor processor;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative RAM.")
+    @NotBlank(message = "Smartphone RAM cannot be null or blank.")
     private Integer ram;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative ROM.")
+    @NotBlank(message = "Smartphone ROM cannot be null or blank.")
     private Integer rom;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative battery capacity.")
+    @NotBlank(message = "Smartphone battery capacity cannot be null or blank.")
     private Integer batteryCapacity;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative fast charging.")
+    @NotBlank(message = "Smartphone fast charging cannot be null or blank.")
     private Integer fastCharging;
 
     //Display
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative display height.")
+    @NotBlank(message = "Smartphone display height cannot be null or blank.")
     private Integer displayHeight;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative display width.")
+    @NotBlank(message = "Smartphone display width cannot be null or blank.")
     private Integer displayWidth;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Smartphone display type cannot be null or blank.")
     private String displayType;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Smartphone display protection cannot be null or blank.")
     private String displayProtection;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative display size.")
+    @NotBlank(message = "Smartphone display size cannot be null or blank.")
     private Double displaySize;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative pixel density.")
+    @NotBlank(message = "Smartphone pixel density cannot be null or blank.")
     private Integer pixelDensity;
 
-    @Column(nullable = false)
-    private boolean alwaysOnDisplay;
+    @NotNull(message = "Smartphone always on display cannot be null or blank.")
+    private Boolean alwaysOnDisplay;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Smartphone cannot have negative refresh rate.")
+    @NotBlank(message = "Smartphone refresh rate cannot be null or blank.")
     private Integer refreshRate;
 
     //Connectivity
 
-    @Column(nullable = false)
-    private boolean gps;
+    @NotNull(message = "Smartphone GPS cannot be null or blank.")
+    private Boolean gps;
 
-    @Column(nullable = false)
-    private boolean nfc;
+    @NotNull(message = "Smartphone NFC cannot be null or blank.")
+    private Boolean nfc;
 
     @NotNull
     @ManyToOne(cascade = CascadeType.ALL)
     private UsbConnector usbConnector;
 
-    @Column(nullable = false)
-    private boolean audioConnector;
+    @NotNull(message = "Smartphone audio connector cannot be null or blank.")
+    private Boolean audioConnector;
 
-    @Column(nullable = false)
-    private boolean wifi;
+    @NotNull(message = "Smartphone WIFI cannot be null or blank.")
+    private Boolean wifi;
 
-    @Column(nullable = false)
-    private boolean bluetooth;
+    @NotNull(message = "Smartphone Bluetooth cannot be null or blank.")
+    private Boolean bluetooth;
 
     @OneToMany(mappedBy = "smartphone")
     private List<Stock> stocks;

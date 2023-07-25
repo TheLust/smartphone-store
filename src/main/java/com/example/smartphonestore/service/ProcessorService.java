@@ -23,7 +23,7 @@ public class ProcessorService {
     }
 
     public Optional<Processor> getById(Long id) {
-        return  processorDao.findById(id);
+        return processorDao.findById(id);
     }
 
     public void add(Processor processor) {

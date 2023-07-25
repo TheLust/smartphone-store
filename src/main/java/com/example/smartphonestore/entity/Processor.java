@@ -1,6 +1,7 @@
 package com.example.smartphonestore.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ public class Processor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Min(value = 0, message = "Processor cannot have negative nm technology.")
     @NotBlank(message = "Processor technology cannot be null or blank.")
     private Integer technology;
 
@@ -28,6 +30,7 @@ public class Processor {
     @ManyToOne(cascade = CascadeType.ALL)
     private Manufacturer manufacturer;
 
+    @Min(value = 0, message = "Processor cannot have negative max frequency.")
     @NotBlank(message = "Processor maximum frequency cannot be null or blank.")
     private Double maxFrequency;
 

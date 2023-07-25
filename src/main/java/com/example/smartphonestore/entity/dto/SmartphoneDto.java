@@ -77,7 +77,7 @@ public class SmartphoneDto {
     private Integer pixelDensity;
 
     @NotBlank(message = "Smartphone always on display cannot be null or blank.")
-    private boolean alwaysOnDisplay;
+    private Boolean alwaysOnDisplay;
 
     @NotBlank(message = "Smartphone refresh rate cannot be null or blank.")
     private Integer refreshRate;
@@ -85,19 +85,19 @@ public class SmartphoneDto {
     //Connectivity
 
     @NotBlank(message = "Smartphone GPS cannot be null or blank.")
-    private boolean gps;
+    private Boolean gps;
 
     @NotBlank(message = "Smartphone NFC cannot be null or blank.")
-    private boolean nfc;
+    private Boolean nfc;
 
     private UsbConnectorDto usbConnector;
 
     @NotBlank(message = "Smartphone audio connector cannot be null or blank.")
-    private boolean audioConnector;
+    private Boolean audioConnector;
 
     @NotBlank(message = "Smartphone WIFI cannot be null or blank.")
-    private boolean wifi;
+    private Boolean wifi;
 
     @NotBlank(message = "Smartphone Bluetooth cannot be null or blank.")
-    private boolean bluetooth;
+    private Boolean bluetooth;
 }
