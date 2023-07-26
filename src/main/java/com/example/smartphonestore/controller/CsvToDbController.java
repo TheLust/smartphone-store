@@ -1,8 +1,10 @@
 package com.example.smartphonestore.controller;
 
+import com.example.smartphonestore.constants.Constants;
 import com.example.smartphonestore.entity.dto.CountryDto;
 import com.example.smartphonestore.exception.NotFoundException;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -35,7 +37,7 @@ public class CsvToDbController {
         try
         {
             //parsing a CSV file into BufferedReader class constructor
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\crme049\\IdeaProjects\\smartphone-store\\src\\main\\resources\\static\\" + file));
+            BufferedReader br = new BufferedReader(new FileReader(Constants.DEFAULT_PATH + file));
             while ((line = br.readLine()) != null)   //returns a Boolean value
             {
                 String[] countryString = line.split(splitBy);    // use comma as separator

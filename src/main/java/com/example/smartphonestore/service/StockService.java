@@ -1,9 +1,8 @@
 package com.example.smartphonestore.service;
 
-import com.example.smartphonestore.dao.SmartphoneDao;
 import com.example.smartphonestore.dao.StockDao;
 import com.example.smartphonestore.entity.Stock;
-import com.example.smartphonestore.entity.dto.StockDto;
+import com.example.smartphonestore.entity.updateDto.UpdatedStockDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,34 +13,41 @@ import java.util.Optional;
 @Service
 public class StockService {
 
-    private final StockDao stockDAO;
-    private final SmartphoneDao smartphoneDAO;
+    private final StockDao stockDao;
 
-    public List<Object> getAll() {
-        return List.of(stockDAO.findAll());
+    public List<Stock> getAll() {
+        return stockDao.findAll();
     }
 
-    public void add(StockDto stockDTO) {
-        Stock stock = new Stock();
-        stock.setSmartphone(smartphoneDAO.findByName(stockDTO.getSmartphone().getName()));
-        stock.setColor(stockDTO.getColor());
-        stock.setStock(stockDTO.getStock());
-        stock.setPictures(stockDTO.getPictures());
-        stockDAO.save(stock);
+    public Optional<Stock> getById(Long id) {
+        return stockDao.findById(id);
     }
 
-    public void update(long id, StockDto stockDTO) {
-        Optional<Stock> stock = stockDAO.findById(id);
-        if (stock.isPresent()) {
-            stock.get().setSmartphone(smartphoneDAO.findByName(stockDTO.getSmartphone().getName()));
-            stock.get().setColor(stockDTO.getColor());
-            stock.get().setStock(stockDTO.getStock());
-            stock.get().setPictures(stockDTO.getPictures());
-            stockDAO.save(stock.get());
+    public void add(Stock stock) {
+        stockDao.save(stock);
+    }
+
+    public void update(Stock stockToUpdate, UpdatedStockDto updatedStock) {
+        if (updatedStock.getStock() != null) {
+            stockToUpdate.setStock(updatedStock.getStock());
         }
+
+        if (updatedStock.getSmartphone() != null) {
+            stockToUpdate.setSmartphone(updatedStock.getSmartphone());
+        }
+
+        if (updatedStock.getColor() != null) {
+            stockToUpdate.setColor(updatedStock.getColor());
+        }
+
+        if (updatedStock.getPictures() != null) {
+            stockToUpdate.setPictures(updatedStock.getPictures());
+        }
+
+        stockDao.save(stockToUpdate);
     }
 
-    public void delete(long id) {
-        stockDAO.deleteById(id);
+    public void delete(Long id) {
+        stockDao.deleteById(id);
     }
 }

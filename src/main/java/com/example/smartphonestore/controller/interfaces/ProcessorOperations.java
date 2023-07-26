@@ -1,6 +1,7 @@
 package com.example.smartphonestore.controller.interfaces;
 
 import com.example.smartphonestore.entity.dto.ProcessorDto;
+import com.example.smartphonestore.entity.updateDto.UpdatedProcessorDto;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,7 +21,7 @@ public interface ProcessorOperations {
 
     @PutMapping("/{processor_id}")
     ResponseEntity<String> update(@PathVariable("processor_id") Long processorId,
-                                  @RequestBody @Valid ProcessorDto processorDto,
+                                  @RequestBody @Valid UpdatedProcessorDto updatedProcessorDto,
                                   @RequestParam(value = "manufacturerId", required = false) Long manufacturerId,
                                   BindingResult bindingResult);
 

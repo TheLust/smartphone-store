@@ -1,6 +1,6 @@
-package com.example.smartphonestore.entity.dto;
+package com.example.smartphonestore.entity.updateDto;
 
-import jakarta.validation.constraints.NotNull;
+import com.example.smartphonestore.entity.Smartphone;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,19 +9,13 @@ import lombok.Setter;
 import java.awt.*;
 import java.util.List;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StockDto {
-
-    private SmartphoneDto smartphone;
-
-    @NotNull(message = "Smartphone color cannot be null.")
+public class UpdatedStockDto {
+    private Smartphone smartphone;
     private Color color;
-
-    @NotNull(message = "Stock cannot be null.")
     private Integer stock;
-
     private List<String> pictures;
 }

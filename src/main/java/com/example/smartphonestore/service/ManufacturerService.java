@@ -2,6 +2,7 @@ package com.example.smartphonestore.service;
 
 import com.example.smartphonestore.dao.ManufacturerDao;
 import com.example.smartphonestore.entity.Manufacturer;
+import com.example.smartphonestore.entity.updateDto.UpdatedManufacturerDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,12 +31,13 @@ public class ManufacturerService {
         manufacturerDao.save(manufacturer);
     }
 
-    public void update(Manufacturer manufacturerToUpdate, Manufacturer updatedManufacturer) {
+    public void update(Manufacturer manufacturerToUpdate, UpdatedManufacturerDto updatedManufacturer) {
         if (updatedManufacturer.getName() != null)
             manufacturerToUpdate.setName(updatedManufacturer.getName());
 
         if (updatedManufacturer.getCountry() != null)
             manufacturerToUpdate.setCountry(updatedManufacturer.getCountry());
+
         manufacturerDao.save(manufacturerToUpdate);
     }
 

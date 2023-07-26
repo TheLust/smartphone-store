@@ -4,13 +4,14 @@ import com.example.smartphonestore.controller.interfaces.ProcessorOperations;
 import com.example.smartphonestore.entity.Manufacturer;
 import com.example.smartphonestore.entity.Processor;
 import com.example.smartphonestore.entity.dto.ProcessorDto;
-import com.example.smartphonestore.exception.FieldNotExpected;
+import com.example.smartphonestore.entity.updateDto.UpdatedProcessorDto;
 import com.example.smartphonestore.exception.NotFoundException;
 import com.example.smartphonestore.mapper.ProcessorMapper;
 import com.example.smartphonestore.service.ManufacturerService;
 import com.example.smartphonestore.service.ProcessorService;
 import com.example.smartphonestore.validator.ProcessorValidator;
 import com.example.smartphonestore.util.ErrorResponse;
+import com.example.smartphonestore.validator.UpdatedProcessorValidator;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class ProcessorController implements ProcessorOperations {
     private final ProcessorValidator processorValidator;
 
     @Autowired
+    private final UpdatedProcessorValidator updatedProcessorValidator;
+
+    @Autowired
     private final ProcessorMapper processorMapper;
 
     @Override
@@ -53,16 +57,10 @@ public class ProcessorController implements ProcessorOperations {
                                 BindingResult bindingResult) {
         Processor processor = processorMapper.convertToProcessor(processorDto);
 
-        if (processor.getManufacturer() != null) {
-            throw new FieldNotExpected("Expected manufacturer id as parameter.");
-        }
-
         Optional<Manufacturer> manufacturer = manufacturerService.getById(manufacturerId);
-
         if (manufacturer.isEmpty()) {
-            throw new NotFoundException("Manufacturer with this id no found.");
+            throw new NotFoundException("Manufacturer with this id not found.");
         }
-
         processor.setManufacturer(manufacturer.get());
 
         processorValidator.validate(processor, bindingResult);
@@ -77,7 +75,7 @@ public class ProcessorController implements ProcessorOperations {
 
     @Override
     public ResponseEntity<String> update(@PathVariable("processor_id") Long processorId,
-                                  @RequestBody @Valid ProcessorDto processorDto,
+                                  @RequestBody @Valid UpdatedProcessorDto updatedProcessorDto,
                                   @RequestParam(value = "manufacturerId", required = false) Long manufacturerId,
                                   BindingResult bindingResult) {
         Optional<Processor> processorToUpdate = processorService.getById(processorId);
@@ -85,17 +83,13 @@ public class ProcessorController implements ProcessorOperations {
             throw new NotFoundException("Processor not found.");
         }
 
-        Processor updatedProcessor = processorMapper.convertToProcessor(processorDto);
-
-        if (!updatedProcessor.getModel().equals(processorToUpdate.get().getModel())) {
-            processorValidator.validate(updatedProcessor, bindingResult);
-            if (bindingResult.hasErrors()) {
-                ErrorResponse.returnErrors(bindingResult);
+        if (updatedProcessorDto.getModel() != null) {
+            if (!updatedProcessorDto.getModel().equals(processorToUpdate.get().getModel())) {
+                updatedProcessorValidator.validate(updatedProcessorDto, bindingResult);
+                if (bindingResult.hasErrors()) {
+                    ErrorResponse.returnErrors(bindingResult);
+                }
             }
-        }
-
-        if (updatedProcessor.getManufacturer() != null) {
-            throw new FieldNotExpected("Expected manufacturer id as parameter.");
         }
 
         if (manufacturerId != null) {
@@ -104,10 +98,10 @@ public class ProcessorController implements ProcessorOperations {
                 throw new NotFoundException("Manufacturer with this id not found.");
             }
 
-            updatedProcessor.setManufacturer(manufacturer.get());
+            updatedProcessorDto.setManufacturer(manufacturer.get());
         }
 
-        processorService.update(processorToUpdate.get(), updatedProcessor);
+        processorService.update(processorToUpdate.get(), updatedProcessorDto);
 
         return new ResponseEntity<>("Updated.", HttpStatus.OK);
     }

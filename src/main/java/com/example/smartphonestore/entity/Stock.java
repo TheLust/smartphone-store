@@ -1,9 +1,11 @@
 package com.example.smartphonestore.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
+import java.awt.*;
 import java.util.List;
 
 @Entity
@@ -14,14 +16,15 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @ManyToOne
+    @NotNull(message = "Stock smartphone cannot be null.")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Smartphone smartphone;
 
-    @Column(nullable = false)
-    private String color;
+    @NotNull(message = "Smartphone color cannot be null.")
+    private Color color;
 
-    @Column(nullable = false)
+    @Min(value = 0, message = "Stock cannot have negative width.")
+    @NotNull(message = "Stock cannot be null.")
     private Integer stock;
 
     private List<String> pictures;

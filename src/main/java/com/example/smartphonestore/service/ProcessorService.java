@@ -2,6 +2,7 @@ package com.example.smartphonestore.service;
 
 import com.example.smartphonestore.dao.ProcessorDao;
 import com.example.smartphonestore.entity.Processor;
+import com.example.smartphonestore.entity.updateDto.UpdatedProcessorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class ProcessorService {
         processorDao.save(processor);
     }
 
-    public void update(Processor processorToUpdate, Processor updatedProcessor) {
+    public void update(Processor processorToUpdate, UpdatedProcessorDto updatedProcessor) {
         if (updatedProcessor.getTechnology() != null) {
             processorToUpdate.setTechnology(updatedProcessor.getTechnology());
         }

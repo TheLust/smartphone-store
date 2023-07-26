@@ -6,7 +6,7 @@ import com.example.smartphonestore.entity.Processor;
 import com.example.smartphonestore.entity.Smartphone;
 import com.example.smartphonestore.entity.UsbConnector;
 import com.example.smartphonestore.entity.dto.SmartphoneDto;
-import com.example.smartphonestore.exception.FieldNotExpected;
+import com.example.smartphonestore.entity.updateDto.UpdatedSmartphoneDto;
 import com.example.smartphonestore.exception.NotFoundException;
 import com.example.smartphonestore.mapper.SmartphoneMapper;
 import com.example.smartphonestore.service.ManufacturerService;
@@ -15,6 +15,7 @@ import com.example.smartphonestore.service.SmartphoneService;
 import com.example.smartphonestore.service.UsbConnectorService;
 import com.example.smartphonestore.util.ErrorResponse;
 import com.example.smartphonestore.validator.SmartphoneValidator;
+import com.example.smartphonestore.validator.UpdatedSmartphoneValidator;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,9 @@ public class SmartphoneController implements SmartphoneOperations {
     private final SmartphoneValidator smartphoneValidator;
 
     @Autowired
+    private final UpdatedSmartphoneValidator updatedSmartphoneValidator;
+
+    @Autowired
     private final SmartphoneMapper smartphoneMapper;
 
     @Override
@@ -68,18 +72,6 @@ public class SmartphoneController implements SmartphoneOperations {
                                        @RequestParam("usbConnectorId") Long usbConnectorId,
                                        BindingResult bindingResult) {
         Smartphone smartphone = smartphoneMapper.convertToSmartphone(smartphoneDto);
-
-        if (smartphone.getManufacturer() != null) {
-            throw new FieldNotExpected("Expected manufacturer id as parameter.");
-        }
-
-        if (smartphone.getProcessor() != null) {
-            throw new FieldNotExpected("Expected processor id as parameter.");
-        }
-
-        if (smartphone.getUsbConnector() != null) {
-            throw new FieldNotExpected("Expected USB connector id as parameter.");
-        }
 
         Optional<Manufacturer> manufacturer = manufacturerService.getById(manufacturerId);
         if (manufacturer.isEmpty()) {
@@ -111,7 +103,7 @@ public class SmartphoneController implements SmartphoneOperations {
 
     @Override
     public ResponseEntity<String> update(@PathVariable("smartphone_id") Long smartphoneId,
-                                         @RequestBody @Valid SmartphoneDto smartphoneDto,
+                                         @RequestBody @Valid UpdatedSmartphoneDto updatedSmartphoneDto,
                                          @RequestParam(value = "manufacturerId", required = false) Long manufacturerId,
                                          @RequestParam(value = "processorId", required = false) Long processorId,
                                          @RequestParam(value = "usbConnectorId", required = false) Long usbConnectorId,
@@ -121,25 +113,13 @@ public class SmartphoneController implements SmartphoneOperations {
             throw new NotFoundException("Smartphone not found.");
         }
 
-        Smartphone updatedSmartphone = smartphoneMapper.convertToSmartphone(smartphoneDto);
-
-        if (!updatedSmartphone.getName().equals(smartphoneToUpdate.get().getName())) {
-            smartphoneValidator.validate(updatedSmartphone, bindingResult);
-            if (bindingResult.hasErrors()) {
-                ErrorResponse.returnErrors(bindingResult);
+        if (updatedSmartphoneDto.getName() != null) {
+            if (!updatedSmartphoneDto.getName().equals(smartphoneToUpdate.get().getName())) {
+                updatedSmartphoneValidator.validate(updatedSmartphoneDto, bindingResult);
+                if (bindingResult.hasErrors()) {
+                    ErrorResponse.returnErrors(bindingResult);
+                }
             }
-        }
-
-        if (updatedSmartphone.getManufacturer() != null) {
-            throw new FieldNotExpected("Expected manufacturer id as parameter.");
-        }
-
-        if (updatedSmartphone.getProcessor() != null) {
-            throw new FieldNotExpected("Expected processor id as parameter.");
-        }
-
-        if (updatedSmartphone.getUsbConnector() != null) {
-            throw new FieldNotExpected("Expected USB connector id as parameter.");
         }
 
         if (manufacturerId != null) {
@@ -148,7 +128,7 @@ public class SmartphoneController implements SmartphoneOperations {
                 throw new NotFoundException("Manufacturer with this id not found.");
             }
 
-            updatedSmartphone.setManufacturer(manufacturer.get());
+            updatedSmartphoneDto.setManufacturer(manufacturer.get());
         }
 
         if (processorId != null) {
@@ -157,7 +137,7 @@ public class SmartphoneController implements SmartphoneOperations {
                 throw new NotFoundException("Processor with this id not found.");
             }
 
-            updatedSmartphone.setProcessor(processor.get());
+            updatedSmartphoneDto.setProcessor(processor.get());
         }
 
         if (usbConnectorId != null) {
@@ -166,10 +146,10 @@ public class SmartphoneController implements SmartphoneOperations {
                 throw new NotFoundException("USB connector with this id not found.");
             }
 
-            updatedSmartphone.setUsbConnector(usbConnector.get());
+            updatedSmartphoneDto.setUsbConnector(usbConnector.get());
         }
 
-        smartphoneService.update(smartphoneToUpdate.get(), updatedSmartphone);
+        smartphoneService.update(smartphoneToUpdate.get(), updatedSmartphoneDto);
 
         return new ResponseEntity<>("Updated.", HttpStatus.OK);
     }

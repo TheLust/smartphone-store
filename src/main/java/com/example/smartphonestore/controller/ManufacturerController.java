@@ -4,13 +4,14 @@ import com.example.smartphonestore.controller.interfaces.ManufacturerOperations;
 import com.example.smartphonestore.entity.Country;
 import com.example.smartphonestore.entity.Manufacturer;
 import com.example.smartphonestore.entity.dto.ManufacturerDto;
-import com.example.smartphonestore.exception.FieldNotExpected;
+import com.example.smartphonestore.entity.updateDto.UpdatedManufacturerDto;
 import com.example.smartphonestore.exception.NotFoundException;
 import com.example.smartphonestore.mapper.ManufacturerMapper;
 import com.example.smartphonestore.service.CountryService;
 import com.example.smartphonestore.service.ManufacturerService;
 import com.example.smartphonestore.util.ErrorResponse;
 import com.example.smartphonestore.validator.ManufacturerValidator;
+import com.example.smartphonestore.validator.UpdatedManufacturerValidator;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class ManufacturerController implements ManufacturerOperations {
     private final ManufacturerValidator manufacturerValidator;
 
     @Autowired
+    private final UpdatedManufacturerValidator updatedManufacturerValidator;
+
+    @Autowired
     private final ManufacturerMapper manufacturerMapper;
 
     @Override
@@ -51,19 +55,12 @@ public class ManufacturerController implements ManufacturerOperations {
     public ResponseEntity<String> save(@RequestBody @Valid ManufacturerDto manufacturerDto,
                                        @RequestParam("countryId") Long countryId,
                                        BindingResult bindingResult) {
-
         Manufacturer manufacturer = manufacturerMapper.convertToManufacturer(manufacturerDto);
 
-        if (manufacturer.getCountry() != null) {
-            throw new FieldNotExpected("Expected country id as parameter.");
-        }
-
         Optional<Country> country = countryService.getById(countryId);
-
         if (country.isEmpty()) {
             throw new NotFoundException("Country with this id not found.");
         }
-
         manufacturer.setCountry(country.get());
 
         manufacturerValidator.validate(manufacturer, bindingResult);
@@ -78,7 +75,7 @@ public class ManufacturerController implements ManufacturerOperations {
 
     @Override
     public ResponseEntity<String> update(@PathVariable("manufacturer_id") Long manufacturerId,
-                                         @RequestBody @Valid ManufacturerDto manufacturerDto,
+                                         @RequestBody @Valid UpdatedManufacturerDto updatedManufacturerDto,
                                          @RequestParam(value = "countryId", required = false) Long countryId,
                                          BindingResult bindingResult) {
 
@@ -87,17 +84,13 @@ public class ManufacturerController implements ManufacturerOperations {
             throw new NotFoundException("Manufacturer not found.");
         }
 
-        Manufacturer updatedManufacturer = manufacturerMapper.convertToManufacturer(manufacturerDto);
-
-        if (!updatedManufacturer.getName().equals(manufacturerToUpdate.get().getName())) {
-            manufacturerValidator.validate(updatedManufacturer, bindingResult);
-            if (bindingResult.hasErrors()) {
-                ErrorResponse.returnErrors(bindingResult);
+        if (updatedManufacturerDto.getName() != null) {
+            if (!updatedManufacturerDto.getName().equals(manufacturerToUpdate.get().getName())) {
+                updatedManufacturerValidator.validate(updatedManufacturerDto, bindingResult);
+                if (bindingResult.hasErrors()) {
+                    ErrorResponse.returnErrors(bindingResult);
+                }
             }
-        }
-
-        if (updatedManufacturer.getCountry() != null) {
-            throw new FieldNotExpected("Expected country id as parameter.");
         }
 
         if (countryId != null) {
@@ -106,10 +99,10 @@ public class ManufacturerController implements ManufacturerOperations {
                 throw new NotFoundException("Country with this id not found.");
             }
 
-            updatedManufacturer.setCountry(country.get());
+            updatedManufacturerDto.setCountry(country.get());
         }
 
-        manufacturerService.update(manufacturerToUpdate.get(), updatedManufacturer);
+        manufacturerService.update(manufacturerToUpdate.get(), updatedManufacturerDto);
 
         return new ResponseEntity<>("Updated.", HttpStatus.OK);
     }

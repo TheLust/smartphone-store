@@ -1,11 +1,12 @@
 package com.example.smartphonestore.entity.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class ProcessorDto {
 
-    @NotBlank(message = "Processor technology cannot be null or blank.")
+    @NotNull(message = "Processor technology cannot be null.")
     private Integer technology;
 
     @NotBlank(message = "Processor GPU model cannot be null or blank.")
@@ -22,7 +23,7 @@ public class ProcessorDto {
     @NotBlank(message = "Processor model cannot be null or blank.")
     private String model;
 
-    @NotBlank(message = "Processor maximum frequency cannot be null or blank.")
+    @NotNull(message = "Processor maximum frequency cannot be null.")
     private Double maxFrequency;
 
     private ManufacturerDto manufacturer;

@@ -2,10 +2,10 @@ package com.example.smartphonestore.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -17,7 +17,7 @@ public class Processor {
     private Long id;
 
     @Min(value = 0, message = "Processor cannot have negative nm technology.")
-    @NotBlank(message = "Processor technology cannot be null or blank.")
+    @NotNull(message = "Processor technology cannot be null.")
     private Integer technology;
 
     @NotBlank(message = "Processor GPU model cannot be null or blank.")
@@ -31,7 +31,7 @@ public class Processor {
     private Manufacturer manufacturer;
 
     @Min(value = 0, message = "Processor cannot have negative max frequency.")
-    @NotBlank(message = "Processor maximum frequency cannot be null or blank.")
+    @NotNull(message = "Processor maximum frequency cannot be null.")
     private Double maxFrequency;
 
     @OneToMany(mappedBy = "processor")
